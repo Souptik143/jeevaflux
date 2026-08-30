@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeevaflux — National Edge-AI Health & Environmental Resilience Platform</title>
+    <title>JeevaFlux — On-Device AI Personal Health & Environmental Companion | Govt. of India Initiative Concept</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -11,297 +11,650 @@
             theme: {
                 extend: {
                     colors: {
-                        gov: {
-                            blue: '#13357B',
-                            lightBlue: '#1D4ED8',
-                            orange: '#FF9933',
-                            green: '#138808',
-                            dark: '#0F172A',
-                            surface: '#F8FAFC'
-                        }
+                        saffron: '#FF9933',
+                        indiaGreen: '#138808',
+                        navyBlue: '#000080',
+                        govDark: '#1b2a4a'
                     }
                 }
             }
         }
     </script>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .tricolor-strip {
-            height: 4px;
-            background: linear-gradient(90deg, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
-        }
-    </style>
-<style>
-  .lms-source-label {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: #e0e0e0;
-    color: #333333;
-    border-radius: 10px;
-    padding: 4px 4px;
-    font-family: sans-serif;
-    font-size: 10px;
-    pointer-events: none;
-    font-weight: 500;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-</style></head>
-<body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-saffron selection:text-white">
 
-    <div class="tricolor-strip"></div>
-    <header class="bg-gov-blue text-white border-b border-blue-900">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center text-xs">
-            <div class="flex items-center gap-3">
-                <span class="bg-gov-orange text-white px-2 py-0.5 rounded font-bold">GOI INITIATIVE</span>
-                <span>Ministry of Health & Family Welfare (MoHFW) / NDMA Aligned Platform</span>
+    <!-- Top Government Header Banner -->
+    <header class="bg-navyBlue text-white text-xs border-b border-blue-900 py-1.5 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="bg-saffron text-slate-900 font-bold px-1.5 py-0.5 rounded text-[10px]">GOI INITIATIVE</span>
+                <span class="tracking-wide">Ministry of Health & Family Welfare / NDMA Aligned Platform</span>
             </div>
-            <div class="flex items-center gap-4 mt-2 sm:mt-0 font-medium">
-                <span>Skip to Main Content</span>
-                <span>|</span>
-                <span>A- | A | A+</span>
-                <span>|</span>
-                <span class="text-emerald-400 font-bold">● System Status: Operational</span>
+            <div class="flex items-center space-x-4 mt-1 sm:mt-0">
+                <span class="flex items-center"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> DPDP Act 2023 Compliant</span>
+                <span class="hidden md:inline">|</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-signal text-saffron mr-1"></i> Offline-First Edge AI</span>
             </div>
         </div>
     </header>
 
-    <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="h-12 w-12 rounded bg-gov-blue flex items-center justify-center text-white font-bold text-xl shadow">
-                    <i class="fa-solid fa-shield-heart text-gov-orange"></i>
+    <!-- Main Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron via-white to-indiaGreen p-0.5 shadow-md flex items-center justify-center">
+                        <div class="w-full h-full bg-navyBlue rounded-[10px] flex items-center justify-center text-white">
+                            <i class="fa-solid fa-heart-pulse text-saffron text-lg"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black tracking-tight text-navyBlue">JeevaFlux</span>
+                        <span class="block text-[10px] font-semibold text-slate-500 uppercase tracking-widest">जीवफ्लक्स • On-Device AI Companion</span>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg md:text-xl text-gov-blue tracking-tight">JEEVAFLUX <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-mono">National Edge-AI Grid</span></h1>
-                    <p class="text-xs text-slate-500">Privacy-First Wearable Health & Environmental Risk Intelligence</p>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-8 font-medium text-sm text-slate-600">
+                    <a href="#overview" class="hover:text-saffron transition">Overview</a>
+                    <a href="#dashboard" class="hover:text-saffron transition text-navyBlue font-semibold flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span>Live Simulator</a>
+                    <a href="#architecture" class="hover:text-saffron transition">Tech Stack</a>
+                    <a href="#challenges" class="hover:text-saffron transition">Safety & Mitigation</a>
+                    <a href="#impact" class="hover:text-saffron transition">Target Audience</a>
+                    <button onclick="triggerSOSModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg shadow-sm transition flex items-center text-xs">
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5 animate-bounce"></i> Emergency SOS
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-navyBlue p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
                 </div>
             </div>
-            <div class="flex items-center gap-2 mt-3 md:mt-0 text-sm font-medium">
-                <a href="#dashboard" onclick="switchTab('dashboard')" id="nav-dashboard" class="px-4 py-2 rounded bg-gov-blue text-white transition shadow-sm">Live Dashboard</a>
-                <a href="#analytics" onclick="switchTab('analytics')" id="nav-analytics" class="px-4 py-2 rounded text-slate-700 hover:bg-slate-100 transition">Telemetry & AI Logs</a>
-                <a href="#guidelines" onclick="switchTab('guidelines')" id="nav-guidelines" class="px-4 py-2 rounded text-slate-700 hover:bg-slate-100 transition">NDMA / CPCB Advisory</a>
-            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <a href="#overview" class="block py-2 text-slate-700 font-medium">Overview</a>
+            <a href="#dashboard" class="block py-2 text-navyBlue font-semibold">Live Simulator</a>
+            <a href="#architecture" class="block py-2 text-slate-700 font-medium">Tech Stack</a>
+            <a href="#challenges" class="block py-2 text-slate-700 font-medium">Safety & Mitigation</a>
+            <a href="#impact" class="block py-2 text-slate-700 font-medium">Target Audience</a>
+            <button onclick="triggerSOSModal()" class="w-full bg-red-600 text-white font-bold py-2.5 rounded-lg text-center mt-2">
+                Emergency SOS
+            </button>
         </div>
     </nav>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+    <!-- Hero Section -->
+    <section id="overview" class="relative overflow-hidden bg-gradient-to-b from-slate-900 via-navyBlue to-blue-950 text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#FF9933_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur border border-white/20 px-3 py-1 rounded-full text-xs font-semibold text-saffron">
+                    <i class="fa-solid fa-microchip"></i>
+                    <span>Edge-First Intelligence for Environmental Extremes</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                    Anticipating Health Risks Before They Become Emergencies.
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+                    India faces recurring heat waves, floods, cyclones, and air pollution events. <strong class="text-white">JeevaFlux</strong> is a privacy-first, offline-capable wearable and mobile companion that fuses physiological vitals with real-time CPCB environmental data using on-device TinyML.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <a href="#dashboard" class="bg-saffron hover:bg-orange-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition flex items-center">
+                        <i class="fa-solid fa-chart-line mr-2"></i> Explore Live Dashboard
+                    </a>
+                    <a href="#architecture" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold px-6 py-3 rounded-xl backdrop-blur transition flex items-center">
+                        <i class="fa-solid fa-file-shield mr-2"></i> Architecture & Sensors
+                    </a>
+                </div>
 
-        <!-- Tab 1: Live Monitoring Dashboard -->
-        <div id="tab-dashboard" class="space-y-6">
-            
-            <!-- National Alert Banner -->
-            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div class="flex items-start gap-3">
-                    <div class="text-amber-600 text-xl mt-0.5"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="grid grid-cols-3 gap-4 pt-8 border-t border-white/10">
                     <div>
-                        <h2 class="font-bold text-amber-900 text-sm md:text-base">National Heatwave & Air Quality Advisory (Zone 4 - NCR / Northern Plains)</h2>
-                        <p class="text-xs text-amber-800 mt-0.5">Surface ambient temp recorded at 41.5°C with PM2.5 at 142 µg/m³. Edge-AI sensor fusion recommends active hydration intervals for field personnel.</p>
+                        <span class="block text-2xl sm:text-3xl font-black text-saffron">730+</span>
+                        <span class="text-xs text-slate-400">Heat/Sunstroke Deaths (2022 Data Base)</span>
                     </div>
-                </div>
-                <div class="bg-amber-200 text-amber-900 px-3 py-1 rounded text-xs font-mono font-bold shrink-0">
-                    Alert Level: MODERATE RISK
+                    <div>
+                        <span class="block text-2xl sm:text-3xl font-black text-emerald-400">100%</span>
+                        <span class="text-xs text-slate-400">On-Device Privacy (Offline First)</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl sm:text-3xl font-black text-cyan-400">ESP32-S3</span>
+                        <span class="text-xs text-slate-400">Low-Power Edge Hardware</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Grid of Key Physiological & Environmental Parameters -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                
-                <!-- Card 1 -->
-                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Heart Rate (MAX30102)</span>
-                        <span class="text-rose-500 bg-rose-50 px-2 py-0.5 rounded text-xs font-bold">Stable</span>
+            <!-- Hero Mockup Card -->
+            <div class="lg:col-span-5">
+                <div class="bg-slate-800/80 border border-slate-700/80 p-6 rounded-3xl shadow-2xl backdrop-blur-xl relative">
+                    <div class="absolute -top-3 -right-3 bg-saffron text-slate-900 font-extrabold text-[10px] px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                        Live Simulation Active
                     </div>
-                    <div class="mt-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold text-slate-900">82</span>
-                        <span class="text-xs text-slate-500">BPM (Resting)</span>
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-emerald-500 rounded-full animate-ping"></div>
+                            <span class="font-bold text-sm text-slate-200">Wearable ID: JF-DEL-8902</span>
+                        </div>
+                        <span class="text-xs bg-blue-900/60 text-blue-300 px-2.5 py-1 rounded-md font-mono">BLE 5.0 Synced</span>
                     </div>
-                    <div class="mt-2 text-xs text-slate-600 border-t pt-2 flex justify-between">
-                        <span>Baseline: 75-85</span>
-                        <span class="text-emerald-600 font-semibold">Normal</span>
-                    </div>
-                </div>
 
-                <!-- Card 2 -->
-                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Skin Temperature</span>
-                        <span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-xs font-bold">Elevated</span>
-                    </div>
-                    <div class="mt-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold text-slate-900">38.1</span>
-                        <span class="text-xs text-slate-500">°C</span>
-                    </div>
-                    <div class="mt-2 text-xs text-slate-600 border-t pt-2 flex justify-between">
-                        <span>Ambient: 41.5°C</span>
-                        <span class="text-amber-600 font-semibold">Heat Stress Risk</span>
-                    </div>
-                </div>
+                    <div class="py-6 space-y-4">
+                        <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-heart-pulse text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 block">Heart Rate & SpO₂</span>
+                                    <span class="text-lg font-bold text-white">98 BPM <span class="text-xs font-normal text-emerald-400 ml-1">99% SpO₂</span></span>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded font-semibold">Normal Vitals</span>
+                        </div>
 
-                <!-- Card 3 -->
-                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Blood Oxygen (SpO₂)</span>
-                        <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded text-xs font-bold">Optimal</span>
-                    </div>
-                    <div class="mt-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold text-slate-900">97</span>
-                        <span class="text-xs text-slate-500">%</span>
-                    </div>
-                    <div class="mt-2 text-xs text-slate-600 border-t pt-2 flex justify-between">
-                        <span>CPCB AQI: 142 (Poor)</span>
-                        <span class="text-emerald-600 font-semibold">Safe Range</span>
-                    </div>
-                </div>
+                        <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-700 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-temperature-arrow-up text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 block">Environment (CPCB + Skin)</span>
+                                    <span class="text-lg font-bold text-white">41.2°C <span class="text-xs text-saffron ml-1">AQI: 284 (Poor)</span></span>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded font-semibold animate-pulse">Heat Warning</span>
+                        </div>
 
-                <!-- Card 4 -->
-                <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Fall / Posture Sensor</span>
-                        <span class="text-blue-600 bg-blue-50 px-2 py-0.5 rounded text-xs font-bold">Active</span>
+                        <div class="p-3 bg-saffron/10 border border-saffron/30 rounded-xl text-xs text-saffron flex items-start space-x-2">
+                            <i class="fa-solid fa-circle-exclamation mt-0.5 text-saffron"></i>
+                            <p><strong>Early Risk Warning:</strong> High ambient heat + rising skin temperature. Vibration alert triggered on wrist device. Hydration advised.</p>
+                        </div>
                     </div>
-                    <div class="mt-3 flex items-baseline gap-2">
-                        <span class="text-2xl font-bold text-emerald-600">No Fall</span>
-                        <span class="text-xs text-slate-500">MPU6050</span>
-                    </div>
-                    <div class="mt-2 text-xs text-slate-600 border-t pt-2 flex justify-between">
-                        <span>Motion Status</span>
-                        <span class="text-emerald-600 font-semibold">Upright / Steady</span>
-                    </div>
-                </div>
 
-            </div>
-
-            <!-- Detailed Telemetry & Regional Node Table -->
-            <div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
-                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                    <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wide">Active Node Telemetry & Sync Status (Offline-First Edge Grid)</h3>
-                    <span class="text-xs font-mono bg-slate-200 px-2 py-1 rounded text-slate-700">Encrypted Local SQLite Queue</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-600 uppercase text-xs border-b">
-                                <th class="p-3 font-semibold">Node ID</th>
-                                <th class="p-3 font-semibold">Region / Zone</th>
-                                <th class="p-3 font-semibold">Sensor Payload</th>
-                                <th class="p-3 font-semibold">TinyML Inference</th>
-                                <th class="p-3 font-semibold">Sync Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200 text-xs">
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-mono font-semibold text-gov-blue">#JF-DEL-8902</td>
-                                <td class="p-3">New Delhi Central (Outdoor Worker)</td>
-                                <td class="p-3">HR: 82 | Temp: 38.1°C | PM2.5: 142</td>
-                                <td class="p-3 text-amber-600 font-semibold">Moderate Heat Stress</td>
-                                <td class="p-3 text-emerald-600 font-medium">Synced (BLE / 4G)</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-mono font-semibold text-gov-blue">#JF-MUM-4411</td>
-                                <td class="p-3">Mumbai Coastal (Field Responder)</td>
-                                <td class="p-3">HR: 76 | Temp: 36.9°C | Humidity: 88%</td>
-                                <td class="p-3 text-emerald-600 font-semibold">Normal Baseline</td>
-                                <td class="p-3 text-emerald-600 font-medium">Synced</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-mono font-semibold text-gov-blue">#JF-RAJ-1109</td>
-                                <td class="p-3">Jaisalmer Rural (Elderly Care)</td>
-                                <td class="p-3">HR: 88 | Temp: 38.9°C | GSR: 3.4µS</td>
-                                <td class="p-3 text-amber-600 font-semibold">Dehydration Risk Warning</td>
-                                <td class="p-3 text-amber-600 font-medium">Offline Queue (Store & Forward)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Tab 2: Telemetry & AI Logs -->
-        <div id="tab-analytics" class="space-y-6 hidden">
-            <div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
-                <h3 class="font-bold text-slate-800 text-base mb-2">On-Device TinyML Inference & Sensor Fusion Pipeline</h3>
-                <p class="text-xs text-slate-500 mb-4">Detailed logs demonstrating local calculation of risk scores without exposing raw biometric telemetry to external cloud servers.</p>
-                
-                <div class="space-y-3 font-mono text-xs">
-                    <div class="p-3 bg-slate-900 text-emerald-400 rounded flex justify-between items-center">
-                        <span>[11:14:02 UTC] ESP32-S3: MAX30102 + BME680 sensor fusion packet parsed successfully.</span>
-                        <span class="bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded">STATUS: OK</span>
-                    </div>
-                    <div class="p-3 bg-slate-900 text-amber-400 rounded flex justify-between items-center">
-                        <span>[11:12:45 UTC] TFLite Micro: Skin temperature delta (+1.4°C) exceeded threshold. Triggered haptic vibration alert.</span>
-                        <span class="bg-amber-900 text-amber-200 px-2 py-0.5 rounded">WARNING</span>
-                    </div>
-                    <div class="p-3 bg-slate-900 text-sky-400 rounded flex justify-between items-center">
-                        <span>[11:10:20 UTC] Security Subsystem: Raw physiological records secured in local SQLite with AES-256 equivalent isolation.</span>
-                        <span class="bg-sky-900 text-sky-200 px-2 py-0.5 rounded">ENCRYPTED</span>
+                    <div class="pt-2 text-center">
+                        <span class="text-[11px] text-slate-400">Integrated with NDMA SACHET & CPCB Real-Time OGD</span>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Tab 3: NDMA / CPCB Advisory -->
-        <div id="tab-guidelines" class="space-y-6 hidden">
-            <div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm space-y-4">
-                <h3 class="font-bold text-slate-800 text-base">National Disaster Management Authority (NDMA) & CPCB Compliance Framework</h3>
-                <p class="text-sm text-slate-600">Jeevaflux aligns directly with the National Action Plan on Climate Change and Human Health (NAPCCHH) guidelines, integrating real-time CPCB air quality indices and meteorological warnings.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <div class="p-4 bg-slate-50 border rounded-lg">
-                        <h4 class="font-bold text-gov-blue text-sm mb-1"><i class="fa-solid fa-book-medical mr-2"></i> Heat-Wave Response Protocols</h4>
-                        <p class="text-xs text-slate-600">Automated multi-tier alerts prompt users to intake electrolytes and seek shaded rest areas when ambient-skin thermal fusion crosses safe limits.</p>
+    <!-- Core USP & Value Proposition -->
+    <section class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-saffron bg-orange-50 px-3 py-1 rounded-full border border-orange-200">Core USP</span>
+                <h2 class="text-3xl font-black text-navyBlue">Understanding the Human-Environment Interaction</h2>
+                <p class="text-slate-600">JeevaFlux doesn't just monitor the person or the environment in silos — it fuses both to provide personalized early health warnings, operating seamlessly even when network connectivity fails.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-navyBlue text-saffron rounded-xl flex items-center justify-center text-xl font-bold mb-6 shadow">
+                        <i class="fa-solid fa-cloud-sun-rain"></i>
                     </div>
-                    <div class="p-4 bg-slate-50 border rounded-lg">
-                        <h4 class="font-bold text-gov-blue text-sm mb-1"><i class="fa-solid fa-smog mr-2"></i> PM2.5 / Respiratory Protection</h4>
-                        <p class="text-xs text-slate-600">Cross-references CPCB hourly AQI feeds to advise N95 filtration usage during heavy smog or industrial particulate spikes.</p>
+                    <h3 class="text-lg font-bold text-navyBlue mb-2">Disaster-Specific AI</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Custom trained around Indian heat waves, heavy monsoonal floods, cyclones, and peak smog/air-pollution episodes.</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-navyBlue text-emerald-400 rounded-xl flex items-center justify-center text-xl font-bold mb-6 shadow">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-navyBlue mb-2">True Edge-First Intelligence</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Critical risk analysis runs locally via TinyML on ESP32-S3/nRF5340 chips, reducing cloud dependency and latency to zero.</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-8 rounded-2xl hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-navyBlue text-cyan-400 rounded-xl flex items-center justify-center text-xl font-bold mb-6 shadow">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-navyBlue mb-2">Privacy by Design</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Raw sensitive physiological data remains securely on-device. Only explicitly authorized emergency data is transmitted.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Live Simulation Dashboard -->
+    <section id="dashboard" class="py-16 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">Interactive Prototype</span>
+                    <h2 class="text-3xl font-black text-navyBlue mt-2">JeevaFlux Real-Time Sensor & AI Health Feed</h2>
+                    <p class="text-slate-600 text-sm mt-1">Simulate environmental scenarios and observe on-device sensor fusion and tier-based alert responses.</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-2">
+                    <button onclick="setScenario('normal')" class="px-4 py-2 bg-white border border-slate-300 text-slate-700 text-xs font-bold rounded-lg shadow-sm hover:bg-slate-50 transition">Normal Baseline</button>
+                    <button onclick="setScenario('heatwave')" class="px-4 py-2 bg-saffron text-slate-950 text-xs font-bold rounded-lg shadow-sm hover:bg-orange-500 transition">Simulate Heat Wave</button>
+                    <button onclick="setScenario('pollution')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg shadow-sm hover:bg-indigo-700 transition">Simulate High AQI</button>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left Column: Sensor Inputs -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-sm font-bold text-navyBlue uppercase tracking-wider mb-4 flex items-center justify-between">
+                            <span><i class="fa-solid fa-sliders text-saffron mr-2"></i> Physiological & Environmental Inputs</span>
+                            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">ESP32-S3 Live</span>
+                        </h3>
+
+                        <div class="space-y-5">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">Heart Rate (MAX30102)</span>
+                                    <span id="val-hr" class="text-navyBlue font-bold">78 BPM</span>
+                                </div>
+                                <input type="range" min="60" max="160" value="78" class="w-full accent-navyBlue cursor-pointer" id="slider-hr" oninput="updateSimulation()">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">Blood Oxygen (SpO₂)</span>
+                                    <span id="val-spo2" class="text-navyBlue font-bold">98%</span>
+                                </div>
+                                <input type="range" min="80" max="100" value="98" class="w-full accent-emerald-600 cursor-pointer" id="slider-spo2" oninput="updateSimulation()">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">Skin Temperature (MLX90614)</span>
+                                    <span id="val-temp" class="text-navyBlue font-bold">36.8°C</span>
+                                </div>
+                                <input type="range" min="35.0" max="41.5" step="0.1" value="36.8" class="w-full accent-amber-500 cursor-pointer" id="slider-temp" oninput="updateSimulation()">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-600">Ambient PM2.5 (CPCB Sensor)</span>
+                                    <span id="val-pm" class="text-navyBlue font-bold">45 µg/m³</span>
+                                </div>
+                                <input type="range" min="10" max="450" value="45" class="w-full accent-red-500 cursor-pointer" id="slider-pm" oninput="updateSimulation()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offline Status Box -->
+                    <div class="bg-navyBlue text-white p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                        <div>
+                            <span class="text-xs uppercase text-slate-300 font-semibold tracking-wider block">Connectivity & Storage</span>
+                            <span class="text-sm font-bold text-emerald-400"><i class="fa-solid fa-wifi-slash mr-1"></i> Offline Mode Active (SQLite Local Sync)</span>
+                        </div>
+                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-saffron font-bold">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Edge AI Decision & Alert Engine -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-full flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
+                                <h3 class="text-sm font-bold text-navyBlue uppercase tracking-wider">
+                                    <i class="fa-solid fa-brain text-indigo-600 mr-2"></i> On-Device TinyML Sensor Fusion Output
+                                </h3>
+                                <span id="badge-status" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+                                    NORMAL (Wellness Dashboard)
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                    <span class="text-xs text-slate-500 block mb-1">Detected Risk Category</span>
+                                    <span id="risk-category" class="text-base font-bold text-navyBlue">None Detected</span>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                    <span class="text-xs text-slate-500 block mb-1">Inference Latency</span>
+                                    <span class="text-base font-bold text-emerald-600">12ms (ESP32-S3 Edge)</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Tiered Action Engine Result:</span>
+                                <div id="action-box" class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm flex items-start space-x-3">
+                                    <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5 text-lg"></i>
+                                    <div>
+                                        <strong class="block font-bold">All Vitals Optimal</strong>
+                                        <span id="action-text">User is within normal physiological baselines. Continue routine activity with ambient comfort.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 mt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                            <div class="text-xs text-slate-500">
+                                <i class="fa-solid fa-shield-halved text-navyBlue mr-1"></i> DPDP Compliant Local Processing
+                            </div>
+                            <button onclick="triggerSOSModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow transition flex items-center">
+                                <i class="fa-solid fa-triangle-exclamation mr-2"></i> Test Emergency SOS Flow
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-    </main>
+    <!-- Architecture & Tech Stack -->
+    <section id="architecture" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3 mb-14">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-navyBlue bg-blue-50 px-3 py-1 rounded-full border border-blue-200">System Architecture</span>
+                <h2 class="text-3xl font-black text-navyBlue">Four-Tiered Hardware & Software Pipeline</h2>
+                <p class="text-slate-600 text-sm">Engineered for extreme reliability, offline resilience, and ultra-low power consumption across India's diverse terrains.</p>
+            </div>
 
-    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-12 text-xs">
-        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tier 1 -->
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-xl bg-navyBlue text-saffron flex items-center justify-center font-bold mb-4 shadow">01</div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Wearable Edge Layer</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">ESP32-S3 / nRF5340 MCU with BLE 5.0 and local flash storage.</p>
+                    <div class="space-y-1.5 text-[11px] text-slate-700 bg-white p-3 rounded-xl border border-slate-200">
+                        <div><strong>Vitals:</strong> MAX30102 (HR/SpO₂)</div>
+                        <div><strong>Temp:</strong> MLX90614 (Skin)</div>
+                        <div><strong>Motion:</strong> MPU6050 (Falls)</div>
+                        <div><strong>Environment:</strong> BME680 + PMS5003</div>
+                    </div>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-xl bg-navyBlue text-emerald-400 flex items-center justify-center font-bold mb-4 shadow">02</div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Edge AI Engine</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">TensorFlow Lite for Microcontrollers & ONNX Runtime.</p>
+                    <div class="space-y-1.5 text-[11px] text-slate-700 bg-white p-3 rounded-xl border border-slate-200">
+                        <div>• Heat-Stress Prediction</div>
+                        <div>• Respiratory Risk Model</div>
+                        <div>• Fall & Distress Detection</div>
+                        <div>• Sleep & Recovery Analysis</div>
+                    </div>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-xl bg-navyBlue text-cyan-400 flex items-center justify-center font-bold mb-4 shadow">03</div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Mobile Application</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">Flutter / React Native cross-platform app for citizens.</p>
+                    <div class="space-y-1.5 text-[11px] text-slate-700 bg-white p-3 rounded-xl border border-slate-200">
+                        <div>• Wellness Dashboard</div>
+                        <div>• Offline SQLite Database</div>
+                        <div>• Caregiver & SOS Alerts</div>
+                        <div>• Background Sync</div>
+                    </div>
+                </div>
+
+                <!-- Tier 4 -->
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-10 h-10 rounded-xl bg-navyBlue text-saffron flex items-center justify-center font-bold mb-4 shadow">04</div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Secure Backend</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">FastAPI + PostgreSQL for optional cloud coordination.</p>
+                    <div class="space-y-1.5 text-[11px] text-slate-700 bg-white p-3 rounded-xl border border-slate-200">
+                        <div>• Federated Learning Sync</div>
+                        <div>• Emergency Dispatch Bridge</div>
+                        <div>• Aggregate Analytics</div>
+                        <div>• CPCB & NDMA Integration</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges & Risk Mitigation Framework -->
+    <section id="challenges" class="py-16 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3 mb-14">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Risk Mitigation</span>
+                <h2 class="text-3xl font-black text-navyBlue">Addressing Real-World Deployment Challenges</h2>
+                <p class="text-slate-600 text-sm">Proactive engineering strategies ensuring accuracy, battery life, and high accessibility across diverse demographics.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-saffron font-bold text-xs uppercase mb-1">Environmental Robustness</div>
+                    <h4 class="font-bold text-navyBlue text-base mb-2">Sensor Accuracy in Heat, Dust & Sweat</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Multi-sensor fusion algorithms with outlier rejection and automated baseline calibration to prevent false environmental readings.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-emerald-600 font-bold text-xs uppercase mb-1">Power Optimization</div>
+                    <h4 class="font-bold text-navyBlue text-base mb-2">Battery Life vs. Continuous AI</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Adaptive inference scheduling, low-power MCU states, and quantized TinyML models delivering multi-day battery autonomy.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-indigo-600 font-bold text-xs uppercase mb-1">Alert Management</div>
+                    <h4 class="font-bold text-navyBlue text-base mb-2">Preventing False-Alert Fatigue</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Tiered alert logic (Vibration → App Notification → Caregiver Escalation) paired with personalized individual thresholds.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-cyan-600 font-bold text-xs uppercase mb-1">Accessibility</div>
+                    <h4 class="font-bold text-navyBlue text-base mb-2">Low Digital Literacy & Elderly Users</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Simplified large-icon interfaces, regional Indian language support, and assisted onboarding via ASHA/community health workers.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-purple-600 font-bold text-xs uppercase mb-1">Data Governance</div>
+                    <h4 class="font-bold text-navyBlue text-base mb-2">Privacy & Security Compliance</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Strict adherence to India's DPDP Act with local edge processing and explicit consent-based sharing.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="text-red-600 font-bold text-xs uppercase mb-1">Disaster Resilience</div>
+                    <h4 class="font-bold text-navyBlue text-base mb-2">Connectivity Failure During Cyclones/Floods</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">Store-and-forward architecture with local AI inference continuing uninterrupted during total network blackouts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience & Impact -->
+    <section id="impact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3 mb-14">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Target Audience</span>
+                <h2 class="text-3xl font-black text-navyBlue">Protecting Vulnerable Populations Across India</h2>
+                <p class="text-slate-600 text-sm">Designed specifically for those most at risk from environmental extremes and healthcare access barriers.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-12 h-12 bg-orange-100 text-saffron rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-person-cane"></i>
+                    </div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Elderly Citizens</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3"><strong>Risk:</strong> Falls, heat stress, abnormal vitals.</p>
+                    <p class="text-xs text-emerald-700 bg-emerald-50 p-2 rounded-lg border border-emerald-200"><strong>Benefit:</strong> Continuous fall detection and automated SOS to family/caregivers.</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-person-digging"></i>
+                    </div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Outdoor Workers</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3"><strong>Risk:</strong> Heat exposure, dehydration, pollution.</p>
+                    <p class="text-xs text-emerald-700 bg-emerald-50 p-2 rounded-lg border border-emerald-200"><strong>Benefit:</strong> Real-time heat-stress warnings prompting timely work/rest cycles.</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-lungs"></i>
+                    </div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Chronic Respiratory Patients</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3"><strong>Risk:</strong> High PM2.5/PM10 smog episodes.</p>
+                    <p class="text-xs text-emerald-700 bg-emerald-50 p-2 rounded-lg border border-emerald-200"><strong>Benefit:</strong> SpO₂ trend correlation with local CPCB air quality indices.</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                    </div>
+                    <h3 class="font-bold text-navyBlue text-base mb-2">Rural Populations</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3"><strong>Risk:</strong> Disrupted healthcare during disasters.</p>
+                    <p class="text-xs text-emerald-700 bg-emerald-50 p-2 rounded-lg border border-emerald-200"><strong>Benefit:</strong> Offline-first intelligence with store-and-forward emergency alerts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- References & Govt Sources Footer Banner -->
+    <section class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <h4 class="text-white font-bold mb-2 uppercase tracking-wider">About Jeevaflux Platform</h4>
-                <p class="text-slate-400">An indigenous privacy-first edge-AI wearable solution designed for frontline workers, elderly citizens, and rural populations facing environmental climate vulnerabilities.</p>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-2 uppercase tracking-wider">Aligned Government Portals</h4>
-                <ul class="space-y-1">
-                    <li>Ministry of Health & Family Welfare (MoHFW)</li>
-                    <li>National Disaster Management Authority (NDMA)</li>
-                    <li>Central Pollution Control Board (CPCB AQI)</li>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-sm">Institutional Alignment</h4>
+                <ul class="space-y-1.5">
+                    <li>• MoHFW National Action Plan on Climate Change (NAPCCHH)</li>
+                    <li>• NDMA Heat-Wave Prevention & Management Guidelines</li>
+                    <li>• NDMA SACHET National Disaster Alert Portal</li>
+                    <li>• CPCB Real-Time Air Quality Index (PM2.5, PM10, NO₂, SO₂)</li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-2 uppercase tracking-wider">Compliance & Security</h4>
-                <p class="text-slate-400">Built in accordance with digital personal data protection standards, local edge inference storage, and secure store-and-forward emergency beaconing.</p>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-sm">Technical Standards</h4>
+                <ul class="space-y-1.5">
+                    <li>• TensorFlow Lite for Microcontrollers (TinyML)</li>
+                    <li>• PhysioNet Open Clinical Datasets</li>
+                    <li>• Flower Federated Learning Framework</li>
+                    <li>• DPDP Act 2023 Privacy Standard</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-sm">JeevaFlux Mission</h4>
+                <p class="leading-relaxed mb-3">
+                    Transforming environmental and physiological sensor data into timely, personalized action before health risks escalate into medical emergencies across India.
+                </p>
+                <div class="text-saffron font-bold">
+                    <i class="fa-solid fa-quote-left mr-1"></i> "Understanding the Human-Environment Interaction."
+                </div>
             </div>
         </div>
-        <div class="bg-slate-950 py-4 text-center border-t border-slate-800 text-slate-500">
-            Content owned and maintained by Jeevaflux Edge-AI Project Team &bull; Designed for National Health Resilience
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navyBlue text-white py-6 text-center text-xs border-t border-blue-900">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+            <div>
+                &copy; 2026 JeevaFlux Initiative. Developed for Public Health Resilience & Environmental Adaptation.
+            </div>
+            <div class="flex space-x-6 text-slate-300">
+                <span>Privacy Policy</span>
+                <span>Terms of Service</span>
+                <span>Open Source Release</span>
+            </div>
         </div>
     </footer>
 
+    <!-- Emergency SOS Simulation Modal -->
+    <div id="sos-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border-4 border-red-500 animate-pulse">
+            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-black text-red-600 mb-1">EMERGENCY SOS TRIGGERED</h3>
+            <p class="text-xs text-slate-500 mb-4">Offline store-and-forward protocol activated via Bluetooth / Mesh Broadcast.</p>
+            
+            <div class="bg-slate-50 p-4 rounded-xl text-left text-xs space-y-2 mb-6 border border-slate-200">
+                <div><strong>Event:</strong> Fall detected + Severe Heat Stress</div>
+                <div><strong>Location:</strong> Lat 28.6139° N, Long 77.2090° E (New Delhi)</div>
+                <div><strong>Primary Contact:</strong> Caregiver (SMS & Mesh Alert Queued)</div>
+                <div><strong>Status:</strong> <span class="text-amber-600 font-bold">Transmitting via available local gateway...</span></div>
+            </div>
+
+            <button onclick="closeSOSModal()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl text-xs transition">
+                Dismiss / Cancel Alarm
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactive Simulation & UI Logic -->
     <script>
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.getElementById('tab-dashboard').classList.add('hidden');
-            document.getElementById('tab-analytics').classList.add('hidden');
-            document.getElementById('tab-guidelines').classList.add('hidden');
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        }
 
-            // Reset nav styles
-            document.getElementById('nav-dashboard').className = 'px-4 py-2 rounded text-slate-700 hover:bg-slate-100 transition';
-            document.getElementById('nav-analytics').className = 'px-4 py-2 rounded text-slate-700 hover:bg-slate-100 transition';
-            document.getElementById('nav-guidelines').className = 'px-4 py-2 rounded text-slate-700 hover:bg-slate-100 transition';
+        function triggerSOSModal() {
+            document.getElementById('sos-modal').classList.remove('hidden');
+        }
 
-            // Show active tab and highlight nav
-            document.getElementById('tab-' + tabName).classList.remove('hidden');
-            document.getElementById('nav-' + tabName).className = 'px-4 py-2 rounded bg-gov-blue text-white transition shadow-sm';
+        function closeSOSModal() {
+            document.getElementById('sos-modal').classList.add('hidden');
+        }
+
+        function updateSimulation() {
+            const hr = parseInt(document.getElementById('slider-hr').value);
+            const spo2 = parseInt(document.getElementById('slider-spo2').value);
+            const temp = parseFloat(document.getElementById('slider-temp').value);
+            const pm = parseInt(document.getElementById('slider-pm').value);
+
+            document.getElementById('val-hr').innerText = hr + ' BPM';
+            document.getElementById('val-spo2').innerText = spo2 + '%';
+            document.getElementById('val-temp').innerText = temp.toFixed(1) + '°C';
+            document.getElementById('val-pm').innerText = pm + ' µg/m³';
+
+            // AI Decision logic
+            const badge = document.getElementById('badge-status');
+            const category = document.getElementById('risk-category');
+            const actionBox = document.getElementById('action-box');
+            const actionText = document.getElementById('action-text');
+
+            if (temp >= 39.0 || hr > 130) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 animate-pulse";
+                badge.innerText = "CRITICAL WARNING";
+                category.innerText = "🔥 Severe Heat Stress / Hyperthermia Risk";
+                actionBox.className = "p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 text-sm flex items-start space-x-3";
+                actionBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-red-600 mt-0.5 text-lg"></i><div><strong class="block font-bold">Immediate Action Required</strong><span>Wearable vibration alert triggered. Seek shade immediately, hydrate with oral rehydration salts, and notify emergency caregiver contact.</span></div>';
+            } else if (pm > 250 || spo2 < 92) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+                badge.innerText = "RESPIRATORY ALERT";
+                category.innerText = "🫁 Pollution Exposure / Respiratory Stress";
+                actionBox.className = "p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-sm flex items-start space-x-3";
+                actionBox.innerHTML = '<i class="fa-solid fa-cloud-sun text-amber-600 mt-0.5 text-lg"></i><div><strong class="block font-bold">High PM2.5 / Low SpO₂ Trend</strong><span>CPCB AQI threshold exceeded. Wear N95 respirator if outdoors and limit strenuous physical exertion.</span></div>';
+            } else if (hr > 105 || temp > 37.8) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+                badge.innerText = "MODERATE RISK";
+                category.innerText = "💧 Early Dehydration / Fatigue Indicator";
+                actionBox.className = "p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-sm flex items-start space-x-3";
+                actionBox.innerHTML = '<i class="fa-solid fa-droplet text-amber-600 mt-0.5 text-lg"></i><div><strong class="block font-bold">Elevated Temperature / Heart Rate</strong><span>Gentle wrist vibration alert sent. Drink water and take a 10-minute rest in a ventilated area.</span></div>';
+            } else {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+                badge.innerText = "NORMAL (Wellness Dashboard)";
+                category.innerText = "None Detected";
+                actionBox.className = "p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm flex items-start space-x-3";
+                actionBox.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mt-0.5 text-lg"></i><div><strong class="block font-bold">All Vitals Optimal</strong><span>User is within normal physiological baselines. Continue routine activity with ambient comfort.</span></div>';
+            }
+        }
+
+        function setScenario(type) {
+            if (type === 'normal') {
+                document.getElementById('slider-hr').value = 75;
+                document.getElementById('slider-spo2').value = 98;
+                document.getElementById('slider-temp').value = 36.8;
+                document.getElementById('slider-pm').value = 45;
+            } else if (type === 'heatwave') {
+                document.getElementById('slider-hr').value = 138;
+                document.getElementById('slider-spo2').value = 96;
+                document.getElementById('slider-temp').value = 39.5;
+                document.getElementById('slider-pm').value = 85;
+            } else if (type === 'pollution') {
+                document.getElementById('slider-hr').value = 92;
+                document.getElementById('slider-spo2').value = 91;
+                document.getElementById('slider-temp').value = 37.2;
+                document.getElementById('slider-pm').value = 340;
+            }
+            updateSimulation();
         }
     </script>
 </body>
