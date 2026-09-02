@@ -2,13 +2,13 @@
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeevaflux | National Public Health & Environmental Telemetry Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jeevaflux | National Public Health Mobile Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js for interactive graphs -->
+    <!-- Chart.js for interactive mobile graphs -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
@@ -24,7 +24,7 @@
                             slate: '#334155',
                             lightBg: '#f8fafc',
                             cardBg: '#ffffff',
-                            border: '#cbd5e1'
+                            border: '#e2e8f0'
                         }
                     }
                 }
@@ -32,962 +32,589 @@
         }
     </script>
     <style>
-        .emblem-placeholder {
-            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        /* Custom scrollbar */
+        /* Custom scrollbar for mobile view */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
         }
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 3px;
+            border-radius: 2px;
+        }
+        body {
+            overscroll-behavior-y: none;
         }
     </style>
 </head>
-<body class="h-full bg-slate-100 text-slate-800 font-sans antialiased flex flex-col">
+<body class="bg-slate-900 text-slate-800 font-sans antialiased h-full flex justify-center items-center p-0 sm:p-4">
 
-    <!-- GOI Top Tricolour Stripe -->
-    <div class="h-1.5 w-full flex">
-        <div class="bg-amber-500 flex-1"></div>
-        <div class="bg-white flex-1"></div>
-        <div class="bg-emerald-600 flex-1"></div>
-    </div>
+    <!-- Mobile App Container (Android Frame on Desktop, Full Screen on Mobile) -->
+    <div id="app-container" class="w-full sm:max-w-md h-full sm:h-[880px] bg-slate-50 sm:rounded-3xl sm:shadow-2xl flex flex-col overflow-hidden relative border-0 sm:border-8 sm:border-slate-800">
 
-    <!-- Official Top Bar -->
-    <header class="bg-gov-navy text-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Branding / Emblem Placeholder -->
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-full bg-white/10 border-2 border-amber-400 flex items-center justify-center text-amber-300 font-bold text-xl shadow-inner">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs uppercase tracking-widest text-amber-300 font-semibold">Government of India | भारत सरकार</div>
-                        <div class="text-xs text-slate-300">Ministry of Health and Family Welfare</div>
-                        <div class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                            <span>Jeevaflux</span>
-                            <span class="text-xs px-2 py-0.5 rounded bg-emerald-700 text-white font-normal uppercase tracking-wide">National Pilot v2.4</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- GOI Top Tricolour Stripe -->
+        <div class="h-1 w-full flex shrink-0 z-50">
+            <div class="bg-amber-500 flex-1"></div>
+            <div class="bg-white flex-1"></div>
+            <div class="bg-emerald-600 flex-1"></div>
+        </div>
 
-                <!-- Right Utility -->
-                <div class="hidden md:flex items-center space-x-6 text-sm">
-                    <div class="text-right border-r border-slate-700 pr-6">
-                        <div class="text-xs text-slate-400">Node Location</div>
-                        <div class="font-medium text-emerald-400 flex items-center gap-1.5 justify-end">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            New Delhi Central (Zone 4)
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-xs text-slate-400">Gateway Status</div>
-                        <div class="font-semibold text-emerald-400 flex items-center gap-1">
-                            <i class="fa-solid fa-wifi"></i> BLE + LoRa Active
-                        </div>
-                    </div>
-                    <button onclick="toggleOfflineMode()" id="offlineModeBtn" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition flex items-center gap-1.5 shadow">
-                        <i class="fa-solid fa-bolt-lightning"></i> <span id="offlineBtnText">Offline Mode: Standby</span>
-                    </button>
-                </div>
+        <!-- Android Status Bar Simulation -->
+        <div class="bg-gov-navy text-white px-4 py-1.5 flex justify-between items-center text-[11px] font-mono shrink-0 select-none">
+            <div class="flex items-center space-x-2">
+                <span id="statusBarTime" class="font-bold">09:41</span>
+                <span class="text-amber-300">| GOI-SECURE</span>
+            </div>
+            <div class="flex items-center space-x-2.5">
+                <span id="offlineIndicatorBadge" class="hidden text-[9px] bg-emerald-600 text-white px-1.5 py-0.5 rounded animate-pulse">OFFLINE MODE</span>
+                <i class="fa-solid fa-bluetooth text-blue-400"></i>
+                <i class="fa-solid fa-tower-broadcast text-emerald-400"></i>
+                <i class="fa-solid fa-battery-three-quarters text-emerald-400"></i>
             </div>
         </div>
-    </header>
 
-    <!-- Navigation Bar -->
-    <nav class="bg-slate-800 text-slate-200 border-b border-slate-700 shadow sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between overflow-x-auto py-2 md:py-0">
-                <div class="flex space-x-1 sm:space-x-2 min-w-max">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 bg-slate-900 text-white border-t-2 border-amber-400">
-                        <i class="fa-solid fa-chart-pie text-amber-400"></i> Dashboard
-                    </button>
-                    <button onclick="switchTab('health')" id="nav-health" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700">
-                        <i class="fa-solid fa-heart-pulse text-red-400"></i> Health Monitoring
-                    </button>
-                    <button onclick="switchTab('environment')" id="nav-environment" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700">
-                        <i class="fa-solid fa-cloud-sun text-cyan-400"></i> Environmental Stations
-                    </button>
-                    <button onclick="switchTab('fusion')" id="nav-fusion" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700">
-                        <i class="fa-solid fa-brain text-amber-400"></i> Body + Environment Analysis
-                    </button>
-                    <button onclick="switchTab('alerts')" id="nav-alerts" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700">
-                        <i class="fa-solid fa-triangle-exclamation text-yellow-400"></i> Alerts & Timeline
-                    </button>
-                    <button onclick="switchTab('architecture')" id="nav-architecture" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700">
-                        <i class="fa-solid fa-network-wired text-emerald-400"></i> System Architecture
-                    </button>
-                    <button onclick="switchTab('privacy')" id="nav-privacy" class="nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700">
-                        <i class="fa-solid fa-lock text-purple-400"></i> Privacy & Security
-                    </button>
+        <!-- App Header (Ministry branding) -->
+        <header class="bg-gov-navy text-white px-4 py-3 shadow-md flex items-center justify-between shrink-0 z-40">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-full bg-white/10 border border-amber-400 flex items-center justify-center text-amber-300 font-bold text-sm shadow-inner">
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <div class="hidden lg:flex items-center text-xs text-slate-400 pl-4">
-                    <span id="liveTimestamp" class="font-mono">02-Sep-2026 | 01:14 IST</span>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content Container -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 overflow-y-auto">
-
-        <!-- ==================== TAB 1: DASHBOARD ==================== -->
-        <section id="tab-dashboard" class="tab-content space-y-6">
-            <!-- Advisory Banner -->
-            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div class="flex items-start space-x-3">
-                    <div class="text-amber-600 text-xl pt-0.5"><i class="fa-solid fa-bullhorn"></i></div>
-                    <div>
-                        <h3 class="text-sm font-bold text-amber-900">National Health & Environment Advisory</h3>
-                        <p class="text-xs text-amber-800 mt-0.5">High ambient temperature combined with elevated PM2.5 levels detected in urban sector 4. Citizens with respiratory sensitivities or outdoor field workers are advised to monitor hydration levels closely.</p>
+                <div>
+                    <div class="text-[10px] uppercase tracking-widest text-amber-300 font-semibold">Government of India</div>
+                    <div class="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+                        <span>Jeevaflux</span>
+                        <span class="text-[9px] px-1.5 py-0.2 rounded bg-emerald-700 text-white font-normal uppercase">v2.4</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
-                    <span class="text-xs bg-amber-200 text-amber-900 font-semibold px-2.5 py-1 rounded">Advisory Level: Yellow</span>
-                    <button onclick="switchTab('fusion')" class="text-xs bg-amber-700 hover:bg-amber-800 text-white px-3 py-1.5 rounded font-medium transition">View Risk Matrix</button>
-                </div>
             </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleOfflineMode()" id="offlineModeBtn" class="bg-amber-600/90 hover:bg-amber-600 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold transition flex items-center gap-1 shadow">
+                    <i class="fa-solid fa-bolt-lightning text-[10px]"></i> <span id="offlineBtnText">Offline</span>
+                </button>
+            </div>
+        </header>
 
-            <!-- Top Summary Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Scrollable Screen Content Area -->
+        <main id="main-content" class="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
+
+            <!-- ==================== TAB 1: HOME / DASHBOARD ==================== -->
+            <section id="tab-home" class="screen-view space-y-4">
+                <!-- User Greeting & Status Banner -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <div class="text-[11px] text-slate-500 font-medium">Citizen ID: JVF-8842-DL</div>
+                        <h2 class="text-base font-bold text-slate-800 mt-0.5">Namaste, Rajesh Kumar</h2>
+                        <div class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> BioBand Connected (BLE)
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-amber-50 border-2 border-amber-400 flex items-center justify-center text-amber-700 font-bold text-sm">
+                        RK
+                    </div>
+                </div>
+
                 <!-- Personal Health Risk Score Card -->
-                <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-                            <div>
-                                <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Personal Health Risk Score</h2>
-                                <p class="text-xs text-slate-400">Aggregated Biometric & Environmental Index</p>
-                            </div>
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 flex items-center gap-1">
-                                <i class="fa-solid fa-shield text-emerald-600"></i> Stable
-                            </span>
-                        </div>
-                        <div class="my-6 flex items-center justify-center">
-                            <div class="relative flex items-center justify-center">
-                                <svg class="w-36 h-36 transform -rotate-90">
-                                    <circle cx="72" cy="72" r="60" stroke="#f1f5f9" stroke-width="12" fill="none"></circle>
-                                    <circle id="riskScoreCircle" cx="72" cy="72" r="60" stroke="#10b981" stroke-width="12" stroke-dasharray="376.99" stroke-dashoffset="75" stroke-linecap="round" fill="none" class="transition-all duration-1000"></circle>
-                                </svg>
-                                <div class="absolute text-center">
-                                    <div id="riskScoreVal" class="text-3xl font-extrabold text-slate-800">82<span class="text-sm text-slate-400">/100</span></div>
-                                    <div class="text-xs font-semibold text-emerald-600">Low Risk Status</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 rounded p-3 text-xs text-slate-600 space-y-1 border border-slate-100">
-                        <div class="flex justify-between"><span>Physiological Stability:</span> <span class="font-semibold text-slate-800">91%</span></div>
-                        <div class="flex justify-between"><span>Environmental Mitigation:</span> <span class="font-semibold text-slate-800">74%</span></div>
-                        <div class="flex justify-between"><span>Predicted Heat Stress:</span> <span class="font-semibold text-amber-600">Moderate</span></div>
-                    </div>
-                </div>
-
-                <!-- Live Vitals Quick View -->
-                <div class="lg:col-span-2 bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-                            <div>
-                                <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Live Wearable Telemetry</h2>
-                                <p class="text-xs text-slate-400">Stream ID: JVF-IND-8842-DL • Connected via BLE</p>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span class="flex h-2.5 w-2.5 relative">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                                </span>
-                                <span class="text-xs font-mono text-emerald-600 font-semibold">Live Feed</span>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 my-4">
-                            <!-- HR -->
-                            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 hover:border-emerald-500 transition">
-                                <div class="text-xs text-slate-500 flex items-center justify-between">
-                                    <span>Heart Rate</span>
-                                    <i class="fa-solid fa-heart text-red-500"></i>
-                                </div>
-                                <div class="text-2xl font-bold text-slate-800 mt-1"><span id="liveHR">76</span> <span class="text-xs font-normal text-slate-500">BPM</span></div>
-                                <div class="text-[10px] text-emerald-600 mt-1 font-medium"><i class="fa-solid fa-arrow-up-right-dots"></i> Normal Resting</div>
-                            </div>
-                            <!-- SpO2 -->
-                            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 hover:border-emerald-500 transition">
-                                <div class="text-xs text-slate-500 flex items-center justify-between">
-                                    <span>SpO₂ Level</span>
-                                    <i class="fa-solid fa-lungs text-cyan-600"></i>
-                                </div>
-                                <div class="text-2xl font-bold text-slate-800 mt-1"><span id="liveSpO2">98</span><span class="text-xs font-normal text-slate-500">%</span></div>
-                                <div class="text-[10px] text-emerald-600 mt-1 font-medium"><i class="fa-solid fa-circle-check"></i> Optimal Oxygenation</div>
-                            </div>
-                            <!-- Skin Temp -->
-                            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 hover:border-emerald-500 transition">
-                                <div class="text-xs text-slate-500 flex items-center justify-between">
-                                    <span>Skin Temp</span>
-                                    <i class="fa-solid fa-temperature-half text-amber-500"></i>
-                                </div>
-                                <div class="text-2xl font-bold text-slate-800 mt-1"><span id="liveTemp">36.5</span> <span class="text-xs font-normal text-slate-500">°C</span></div>
-                                <div class="text-[10px] text-slate-600 mt-1 font-medium">Ambient: 34.2 °C</div>
-                            </div>
-                            <!-- GSR -->
-                            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 hover:border-emerald-500 transition">
-                                <div class="text-xs text-slate-500 flex items-center justify-between">
-                                    <span>Electrodermal (GSR)</span>
-                                    <i class="fa-solid fa-bolt text-yellow-600"></i>
-                                </div>
-                                <div class="text-2xl font-bold text-slate-800 mt-1"><span id="liveGSR">2.4</span> <span class="text-xs font-normal text-slate-500">µS</span></div>
-                                <div class="text-[10px] text-emerald-600 mt-1 font-medium">Low Stress State</div>
-                            </div>
-                            <!-- Activity -->
-                            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 hover:border-emerald-500 transition">
-                                <div class="text-xs text-slate-500 flex items-center justify-between">
-                                    <span>Activity / Steps</span>
-                                    <i class="fa-solid fa-shoe-prints text-indigo-500"></i>
-                                </div>
-                                <div class="text-2xl font-bold text-slate-800 mt-1">4,820</div>
-                                <div class="text-[10px] text-indigo-600 mt-1 font-medium">Brisk Walking</div>
-                            </div>
-                            <!-- Recovery -->
-                            <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 hover:border-emerald-500 transition">
-                                <div class="text-xs text-slate-500 flex items-center justify-between">
-                                    <span>Recovery Index</span>
-                                    <i class="fa-solid fa-battery-three-quarters text-emerald-600"></i>
-                                </div>
-                                <div class="text-2xl font-bold text-slate-800 mt-1">88%</div>
-                                <div class="text-[10px] text-emerald-600 mt-1 font-medium">High Readiness</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500">
-                        <span>Device: Jeevaflux BioBand Pro v2</span>
-                        <button onclick="switchTab('health')" class="text-gov-blue hover:underline font-medium flex items-center gap-1">Detailed Health Metrics <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Environmental Conditions Summary -->
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Nearby Environmental Monitoring Stations</h2>
-                        <p class="text-xs text-slate-400">LoRa Mesh Node: Connaught Place Station #DL-09</p>
-                    </div>
-                    <button onclick="switchTab('environment')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded font-medium transition self-start sm:self-auto">View Station Map & Mesh</button>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-                    <div class="p-4 rounded-lg bg-cyan-50/50 border border-cyan-100 flex items-center space-x-4">
-                        <div class="p-3 bg-cyan-500 text-white rounded-lg shadow"><i class="fa-solid fa-temperature-high text-xl"></i></div>
+                <div class="bg-gradient-to-br from-gov-navy to-slate-900 rounded-2xl p-5 text-white shadow-md relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
+                    <div class="flex justify-between items-start">
                         <div>
-                            <div class="text-xs text-slate-500">Ambient Temperature</div>
-                            <div class="text-xl font-bold text-slate-800">34.2 °C</div>
-                            <div class="text-[11px] text-amber-700 font-medium">Feels like 38°C (High UV)</div>
+                            <span class="text-[10px] uppercase tracking-wider text-amber-300 font-semibold bg-white/10 px-2 py-0.5 rounded">Aggregated Risk Index</span>
+                            <h3 class="text-xs text-slate-300 mt-1">Personal Health & Environment Score</h3>
                         </div>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                            <i class="fa-solid fa-shield text-emerald-400"></i> Stable
+                        </span>
                     </div>
-                    <div class="p-4 rounded-lg bg-blue-50/50 border border-blue-100 flex items-center space-x-4">
-                        <div class="p-3 bg-blue-500 text-white rounded-lg shadow"><i class="fa-solid fa-droplet text-xl"></i></div>
+
+                    <div class="my-4 flex items-center justify-between">
                         <div>
-                            <div class="text-xs text-slate-500">Relative Humidity</div>
-                            <div class="text-xl font-bold text-slate-800">62%</div>
-                            <div class="text-[11px] text-emerald-600 font-medium">Moderate Comfort</div>
+                            <div class="text-4xl font-extrabold tracking-tight">82<span class="text-lg text-slate-400 font-normal">/100</span></div>
+                            <div class="text-xs text-emerald-400 font-medium mt-0.5"><i class="fa-solid fa-circle-check"></i> Low Risk Status</div>
+                        </div>
+                        <div class="w-20 h-20 relative flex items-center justify-center">
+                            <svg class="w-20 h-20 transform -rotate-90">
+                                <circle cx="40" cy="40" r="34" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"></circle>
+                                <circle cx="40" cy="40" r="34" stroke="#10b981" stroke-width="8" stroke-dasharray="213.6" stroke-dashoffset="38" stroke-linecap="round" fill="none"></circle>
+                            </svg>
+                            <div class="absolute text-center text-xs font-bold">91%</div>
                         </div>
                     </div>
-                    <div class="p-4 rounded-lg bg-orange-50/50 border border-orange-100 flex items-center space-x-4">
-                        <div class="p-3 bg-orange-500 text-white rounded-lg shadow"><i class="fa-solid fa-smog text-xl"></i></div>
+
+                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-white/10 text-[11px] text-slate-300">
+                        <div>Physiological: <span class="text-white font-semibold">Optimal</span></div>
+                        <div class="text-right">Heat Stress: <span class="text-amber-300 font-semibold">Moderate</span></div>
+                    </div>
+                </div>
+
+                <!-- Live Vitals Grid (Compact Android Cards) -->
+                <div>
+                    <div class="flex justify-between items-center mb-2 px-1">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Live Wearable Telemetry</h3>
+                        <button onclick="triggerSimulatedReading()" class="text-[11px] text-gov-blue font-semibold hover:underline">Refresh</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <!-- HR -->
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-[11px] text-slate-500 flex justify-between items-center">
+                                <span>Heart Rate</span>
+                                <i class="fa-solid fa-heart text-red-500"></i>
+                            </div>
+                            <div class="text-xl font-bold text-slate-800 mt-1"><span id="liveHR">76</span> <span class="text-[11px] font-normal text-slate-400">BPM</span></div>
+                            <div class="text-[9px] text-emerald-600 mt-0.5 font-medium">Normal Resting</div>
+                        </div>
+                        <!-- SpO2 -->
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-[11px] text-slate-500 flex justify-between items-center">
+                                <span>SpO₂ Level</span>
+                                <i class="fa-solid fa-lungs text-cyan-600"></i>
+                            </div>
+                            <div class="text-xl font-bold text-slate-800 mt-1"><span id="liveSpO2">98</span><span class="text-[11px] font-normal text-slate-400">%</span></div>
+                            <div class="text-[9px] text-emerald-600 mt-0.5 font-medium">Optimal Oxygen</div>
+                        </div>
+                        <!-- Skin Temp -->
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-[11px] text-slate-500 flex justify-between items-center">
+                                <span>Skin Temp</span>
+                                <i class="fa-solid fa-temperature-half text-amber-500"></i>
+                            </div>
+                            <div class="text-xl font-bold text-slate-800 mt-1"><span id="liveTemp">36.5</span> <span class="text-[11px] font-normal text-slate-400">°C</span></div>
+                            <div class="text-[9px] text-slate-600 mt-0.5 font-medium">Ambient: 34.2°C</div>
+                        </div>
+                        <!-- Activity -->
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-[11px] text-slate-500 flex justify-between items-center">
+                                <span>Activity</span>
+                                <i class="fa-solid fa-shoe-prints text-indigo-500"></i>
+                            </div>
+                            <div class="text-xl font-bold text-slate-800 mt-1">4,820</div>
+                            <div class="text-[9px] text-indigo-600 mt-0.5 font-medium">Brisk Walking</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body + Environment Risk Highlight Card -->
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center space-x-2.5">
+                            <div class="p-2.5 bg-amber-500 text-white rounded-xl shadow"><i class="fa-solid fa-brain text-sm"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-amber-900 uppercase">Body + Environment Fusion</h4>
+                                <div class="text-[11px] text-amber-700 font-semibold">Heat Stress Advisory Active</div>
+                            </div>
+                        </div>
+                        <button onclick="switchTab('risk')" class="text-[11px] bg-amber-700 hover:bg-amber-800 text-white px-2.5 py-1 rounded-lg font-medium transition">Details</button>
+                    </div>
+                    <p class="text-[11px] text-slate-700 mt-2.5 leading-relaxed">
+                        Combined sensor metrics indicate moderate heat strain due to 34.2°C ambient temperature and elevated humidity. Hydration recommended within 45 minutes.
+                    </p>
+                </div>
+
+                <!-- Nearby Environmental Station Quick Widget -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Nearby Station (LoRa Mesh)</h3>
+                        <span class="text-[10px] text-cyan-600 bg-cyan-50 px-2 py-0.5 rounded font-mono font-semibold">DL-01 Connaught</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                            <div class="text-[10px] text-slate-400">AQI</div>
+                            <div class="text-sm font-bold text-amber-600">142</div>
+                            <div class="text-[9px] text-slate-500">Moderate</div>
+                        </div>
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                            <div class="text-[10px] text-slate-400">PM2.5</div>
+                            <div class="text-sm font-bold text-slate-800">68</div>
+                            <div class="text-[9px] text-slate-500">µg/m³</div>
+                        </div>
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                            <div class="text-[10px] text-slate-400">Humidity</div>
+                            <div class="text-sm font-bold text-slate-800">62%</div>
+                            <div class="text-[9px] text-emerald-600">Comfortable</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== TAB 2: HEALTH MONITORING ==================== -->
+            <section id="tab-health" class="screen-view hidden space-y-4">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-100">
                         <div>
-                            <div class="text-xs text-slate-500">PM2.5 / PM10</div>
-                            <div class="text-xl font-bold text-slate-800">68 <span class="text-xs font-normal">µg/m³</span></div>
-                            <div class="text-[11px] text-amber-600 font-medium">Satisfactory to Moderate</div>
+                            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Detailed Physiological Telemetry</h3>
+                            <p class="text-[11px] text-slate-400">Continuous non-invasive clinical monitoring</p>
                         </div>
-                    </div>
-                    <div class="p-4 rounded-lg bg-purple-50/50 border border-purple-100 flex items-center space-x-4">
-                        <div class="p-3 bg-purple-500 text-white rounded-lg shadow"><i class="fa-solid fa-wind text-xl"></i></div>
-                        <div>
-                            <div class="text-xs text-slate-500">Air Quality Index (AQI)</div>
-                            <div class="text-xl font-bold text-slate-800">142 <span class="text-xs font-normal text-amber-600">Moderate</span></div>
-                            <div class="text-[11px] text-slate-500 font-medium">LoRa Gateway Synced</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Health Trends Chart Section -->
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">24-Hour Physiological & Environmental Trend</h2>
-                        <p class="text-xs text-slate-400">Multi-parameter correlation of Heart Rate against Ambient Temperature</p>
-                    </div>
-                    <div class="flex space-x-2 text-xs">
-                        <button class="px-2.5 py-1 bg-slate-800 text-white rounded">24H</button>
-                        <button class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded hover:bg-slate-200">7D</button>
-                        <button class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded hover:bg-slate-200">30D</button>
-                    </div>
-                </div>
-                <div class="h-72 mt-4">
-                    <canvas id="dashboardTrendChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 2: HEALTH MONITORING ==================== -->
-        <section id="tab-health" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Detailed Physiological Metrics & Clinical Telemetry</h2>
-                        <p class="text-xs text-slate-400">Continuous non-invasive health parameter assessment</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded text-xs font-medium bg-emerald-100 text-emerald-800">Sensor Sync: Optimal</span>
-                        <button onclick="triggerSimulatedReading()" class="bg-gov-blue hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded font-medium transition shadow">Refresh Reading</button>
-                    </div>
-                </div>
-
-                <!-- Detailed Metrics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    <!-- Heart Rate Detail -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-500 uppercase">Heart Rate (BPM)</div>
-                                <div class="text-3xl font-extrabold text-slate-800 mt-1" id="detHR">76</div>
-                            </div>
-                            <div class="p-3 bg-red-100 text-red-600 rounded-lg"><i class="fa-solid fa-heart-pulse text-xl"></i></div>
-                        </div>
-                        <div class="mt-4 space-y-2 text-xs text-slate-600">
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Resting Average:</span> <span class="font-semibold">68 BPM</span></div>
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Peak (Today):</span> <span class="font-semibold">112 BPM</span></div>
-                            <div class="flex justify-between"><span>HRV (RMSSD):</span> <span class="font-semibold text-emerald-600">48 ms (Normal)</span></div>
-                        </div>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-100 text-emerald-800">Sync: OK</span>
                     </div>
 
-                    <!-- SpO2 Detail -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-500 uppercase">Blood Oxygen (SpO₂)</div>
-                                <div class="text-3xl font-extrabold text-slate-800 mt-1" id="detSpO2">98%</div>
-                            </div>
-                            <div class="p-3 bg-cyan-100 text-cyan-600 rounded-lg"><i class="fa-solid fa-lungs text-xl"></i></div>
-                        </div>
-                        <div class="mt-4 space-y-2 text-xs text-slate-600">
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>24h Minimum:</span> <span class="font-semibold">96%</span></div>
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Perfusion Index:</span> <span class="font-semibold">4.8%</span></div>
-                            <div class="flex justify-between"><span>Hypoxia Risk:</span> <span class="font-semibold text-emerald-600">Negligible</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Skin Temp Detail -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-500 uppercase">Skin Temperature</div>
-                                <div class="text-3xl font-extrabold text-slate-800 mt-1" id="detTemp">36.5 °C</div>
-                            </div>
-                            <div class="p-3 bg-amber-100 text-amber-600 rounded-lg"><i class="fa-solid fa-temperature-high text-xl"></i></div>
-                        </div>
-                        <div class="mt-4 space-y-2 text-xs text-slate-600">
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Core Estimate:</span> <span class="font-semibold">37.0 °C</span></div>
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Thermal Delta:</span> <span class="font-semibold">+0.3 °C</span></div>
-                            <div class="flex justify-between"><span>Fever Screening:</span> <span class="font-semibold text-emerald-600">Negative</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secondary Health Parameters -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    <!-- GSR Detail -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-500 uppercase">Electrodermal Activity</div>
-                                <div class="text-3xl font-extrabold text-slate-800 mt-1">2.4 µS</div>
-                            </div>
-                            <div class="p-3 bg-yellow-100 text-yellow-600 rounded-lg"><i class="fa-solid fa-bolt text-xl"></i></div>
-                        </div>
-                        <div class="mt-4 space-y-2 text-xs text-slate-600">
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Sympathetic Tone:</span> <span class="font-semibold">Balanced</span></div>
-                            <div class="flex justify-between"><span>Stress Spike Count:</span> <span class="font-semibold">1 (Minor)</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Activity / Sleep -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-500 uppercase">Sleep & Recovery</div>
-                                <div class="text-3xl font-extrabold text-slate-800 mt-1">7h 42m</div>
-                            </div>
-                            <div class="p-3 bg-indigo-100 text-indigo-600 rounded-lg"><i class="fa-solid fa-moon text-xl"></i></div>
-                        </div>
-                        <div class="mt-4 space-y-2 text-xs text-slate-600">
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Deep Sleep:</span> <span class="font-semibold">2h 15m (29%)</span></div>
-                            <div class="flex justify-between"><span>REM Sleep:</span> <span class="font-semibold">1h 50m</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Fall Detection & Posture -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="text-xs font-semibold text-slate-500 uppercase">Fall & Posture Sensor</div>
-                                <div class="text-3xl font-extrabold text-emerald-600 mt-1">Stable</div>
-                            </div>
-                            <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg"><i class="fa-solid fa-person-walking text-xl"></i></div>
-                        </div>
-                        <div class="mt-4 space-y-2 text-xs text-slate-600">
-                            <div class="flex justify-between border-b border-slate-200 pb-1"><span>Impact Anomaly:</span> <span class="font-semibold">None</span></div>
-                            <div class="flex justify-between"><span>Posture Alert:</span> <span class="font-semibold text-emerald-600">Normal Gait</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Deep Telemetry Chart -->
-                <div class="mt-8 pt-6 border-t border-slate-100">
-                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Heart Rate & SpO₂ Historical Telemetry</h3>
-                    <div class="h-64">
-                        <canvas id="healthDetailChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 3: ENVIRONMENTAL STATIONS ==================== -->
-        <section id="tab-environment" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Environmental Monitoring Stations (LoRa Mesh Network)</h2>
-                        <p class="text-xs text-slate-400">Public health particulate and microclimate tracking across municipal zones</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs bg-cyan-100 text-cyan-800 px-2.5 py-1 rounded font-semibold">Active Mesh Nodes: 12</span>
-                        <button onclick="refreshStations()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded font-medium transition">Scan Mesh</button>
-                    </div>
-                </div>
-
-                <!-- Fictional Map Representation & Station List -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                    <!-- Map Simulation Box -->
-                    <div class="lg:col-span-2 bg-slate-900 rounded-lg p-4 text-white flex flex-col justify-between relative overflow-hidden min-h-[380px] shadow-inner">
-                        <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                        <div class="flex justify-between items-center z-10">
-                            <div class="text-xs font-mono text-cyan-400">REGIONAL MESH MAP: DELHI-NCR SECTOR</div>
-                            <div class="flex items-center space-x-2 text-xs">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> <span class="text-slate-300">Normal</span>
-                                <span class="w-2 h-2 rounded-full bg-amber-500 ml-2"></span> <span class="text-slate-300">Elevated</span>
-                            </div>
-                        </div>
-
-                        <!-- Fictional Map Nodes Pins -->
-                        <div class="my-auto relative h-56 flex items-center justify-center z-10">
-                            <!-- Station 1 -->
-                            <div onclick="selectStation('DL-01')" class="absolute top-6 left-12 cursor-pointer group">
-                                <div class="w-6 h-6 rounded-full bg-emerald-500/30 flex items-center justify-center animate-pulse">
-                                    <div class="w-3 h-3 rounded-full bg-emerald-400 border border-white"></div>
-                                </div>
-                                <div class="absolute top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded shadow whitespace-nowrap border border-slate-700">
-                                    Station DL-01: Connaught Place
-                                </div>
-                            </div>
-                            <!-- Station 2 -->
-                            <div onclick="selectStation('DL-02')" class="absolute top-24 right-20 cursor-pointer group">
-                                <div class="w-6 h-6 rounded-full bg-amber-500/30 flex items-center justify-center animate-pulse">
-                                    <div class="w-3 h-3 rounded-full bg-amber-400 border border-white"></div>
-                                </div>
-                                <div class="absolute top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded shadow whitespace-nowrap border border-slate-700">
-                                    Station DL-02: Anand Vihar (PM2.5 High)
-                                </div>
-                            </div>
-                            <!-- Station 3 -->
-                            <div onclick="selectStation('DL-03')" class="absolute bottom-6 left-28 cursor-pointer group">
-                                <div class="w-6 h-6 rounded-full bg-emerald-500/30 flex items-center justify-center">
-                                    <div class="w-3 h-3 rounded-full bg-emerald-400 border border-white"></div>
-                                </div>
-                                <div class="absolute top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded shadow whitespace-nowrap border border-slate-700">
-                                    Station DL-03: AIIMS / Safdarjung
-                                </div>
-                            </div>
-                            <!-- Station 4 -->
-                            <div onclick="selectStation('DL-04')" class="absolute bottom-16 right-16 cursor-pointer group">
-                                <div class="w-6 h-6 rounded-full bg-cyan-500/30 flex items-center justify-center">
-                                    <div class="w-3 h-3 rounded-full bg-cyan-400 border border-white"></div>
-                                </div>
-                                <div class="absolute top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded shadow whitespace-nowrap border border-slate-700">
-                                    Station DL-04: Noida Sector 62
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="z-15 bg-slate-800/90 backdrop-blur p-3 rounded border border-slate-700 text-xs flex justify-between items-center">
-                            <div>
-                                <span class="text-slate-400">Selected Node:</span> <span id="selectedStationName" class="font-semibold text-cyan-300">Station DL-01 (Connaught Place)</span>
-                            </div>
-                            <div class="text-slate-400">LoRa RSSI: <span class="text-emerald-400 font-mono">-72 dBm</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Station Telemetry Sidebar -->
-                    <div class="bg-slate-50 rounded-lg p-5 border border-slate-200 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Station Live Telemetry</h3>
-                            <div id="stationDetails" class="space-y-3 text-xs">
-                                <div class="p-3 bg-white rounded border border-slate-200">
-                                    <div class="text-slate-400">Location ID</div>
-                                    <div class="font-bold text-slate-800 text-sm">DL-01 : Connaught Central</div>
-                                </div>
-                                <div class="p-3 bg-white rounded border border-slate-200">
-                                    <div class="text-slate-400">Air Quality Index (AQI)</div>
-                                    <div class="font-bold text-amber-600 text-sm">142 (Moderate)</div>
-                                </div>
-                                <div class="p-3 bg-white rounded border border-slate-200">
-                                    <div class="text-slate-400">Particulate Matter</div>
-                                    <div class="font-bold text-slate-800 text-sm">PM2.5: 68 µg/m³ | PM10: 115 µg/m³</div>
-                                </div>
-                                <div class="p-3 bg-white rounded border border-slate-200">
-                                    <div class="text-slate-400">Microclimate</div>
-                                    <div class="font-bold text-slate-800 text-sm">34.2 °C | Humidity: 62%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-500 flex items-center justify-between">
-                            <span>Mesh Protocol: LoRaWAN 865MHz</span>
-                            <span class="text-emerald-600 font-semibold">Synced</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 4: BODY + ENVIRONMENT ANALYSIS ==================== -->
-        <section id="tab-fusion" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="pb-4 border-b border-slate-100">
-                    <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Body + Environment Analysis (Cross-Domain Risk Fusion)</h2>
-                    <p class="text-xs text-slate-400">How Jeevaflux fuses wearable physiological metrics with environmental sensors to compute clinical-grade public health risks</p>
-                </div>
-
-                <!-- 4 Risk Cards Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <!-- Heat Stress Risk -->
-                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-5">
-                        <div class="flex items-center justify-between">
+                    <!-- Metrics List -->
+                    <div class="space-y-3 mt-4">
+                        <!-- HR Detail -->
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
                             <div class="flex items-center space-x-3">
-                                <div class="p-3 bg-amber-500 text-white rounded-lg shadow"><i class="fa-solid fa-temperature-arrow-up text-lg"></i></div>
+                                <div class="p-2.5 bg-red-100 text-red-600 rounded-xl"><i class="fa-solid fa-heart-pulse"></i></div>
                                 <div>
-                                    <h3 class="text-sm font-bold text-slate-800">Heat Stress Risk</h3>
-                                    <span class="text-xs text-amber-700 font-semibold">Current Level: Moderate (Action Advised)</span>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Heart Rate</div>
+                                    <div class="text-xs text-emerald-600 font-medium">Resting Average: 68 BPM</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-mono font-bold bg-amber-200 text-amber-900 px-2.5 py-1 rounded">68 / 100</span>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-slate-800"><span id="detHR">76</span> <span class="text-xs font-normal text-slate-500">BPM</span></div>
+                                <div class="text-[10px] text-slate-400">HRV: 48 ms</div>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-600 mt-3">
-                            <strong class="text-slate-700">Fused Variables:</strong> Skin Temperature (36.5°C) + Ambient Temp (34.2°C) + Humidity (62%) + Heart Rate Elevation.
-                        </p>
-                        <div class="mt-4 pt-3 border-t border-amber-200/60 text-xs text-amber-900 flex items-center justify-between">
-                            <span>Clinical Mitigation: Hydrate with 300ml water within 45 mins.</span>
-                            <span class="font-semibold underline">View Protocol</span>
-                        </div>
-                    </div>
 
-                    <!-- Respiratory Risk -->
-                    <div class="bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-lg p-5">
-                        <div class="flex items-center justify-between">
+                        <!-- SpO2 Detail -->
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
                             <div class="flex items-center space-x-3">
-                                <div class="p-3 bg-cyan-600 text-white rounded-lg shadow"><i class="fa-solid fa-lungs text-lg"></i></div>
+                                <div class="p-2.5 bg-cyan-100 text-cyan-600 rounded-xl"><i class="fa-solid fa-lungs"></i></div>
                                 <div>
-                                    <h3 class="text-sm font-bold text-slate-800">Respiratory Risk</h3>
-                                    <span class="text-xs text-cyan-800 font-semibold">Current Level: Elevated for Sensitive Groups</span>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Blood Oxygen (SpO₂)</div>
+                                    <div class="text-xs text-emerald-600 font-medium">Perfusion Index: 4.8%</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-mono font-bold bg-cyan-200 text-cyan-900 px-2.5 py-1 rounded">54 / 100</span>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-slate-800"><span id="detSpO2">98%</span></div>
+                                <div class="text-[10px] text-emerald-600">Optimal</div>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-600 mt-3">
-                            <strong class="text-slate-700">Fused Variables:</strong> SpO₂ Stability (98%) + PM2.5 (68 µg/m³) + Respiration Rate.
-                        </p>
-                        <div class="mt-4 pt-3 border-t border-cyan-200/60 text-xs text-cyan-900 flex items-center justify-between">
-                            <span>Clinical Mitigation: Avoid strenuous roadside exercise; wear N95 mask if outdoors.</span>
-                            <span class="font-semibold underline">View Protocol</span>
-                        </div>
-                    </div>
 
-                    <!-- Dehydration Risk -->
-                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-5">
-                        <div class="flex items-center justify-between">
+                        <!-- Skin Temp Detail -->
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
                             <div class="flex items-center space-x-3">
-                                <div class="p-3 bg-blue-500 text-white rounded-lg shadow"><i class="fa-solid fa-droplet text-lg"></i></div>
+                                <div class="p-2.5 bg-amber-100 text-amber-600 rounded-xl"><i class="fa-solid fa-temperature-high"></i></div>
                                 <div>
-                                    <h3 class="text-sm font-bold text-slate-800">Dehydration Risk</h3>
-                                    <span class="text-xs text-blue-800 font-semibold">Current Level: Low-Moderate</span>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Skin Temperature</div>
+                                    <div class="text-xs text-slate-600 font-medium">Core Est: 37.0°C</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-mono font-bold bg-blue-200 text-blue-900 px-2.5 py-1 rounded">38 / 100</span>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-slate-800"><span id="detTemp">36.5</span> <span class="text-xs font-normal text-slate-500">°C</span></div>
+                                <div class="text-[10px] text-emerald-600">No Fever</div>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-600 mt-3">
-                            <strong class="text-slate-700">Fused Variables:</strong> Electrodermal Activity (GSR 2.4 µS) + Skin Temperature + Outdoor UV Index.
-                        </p>
-                        <div class="mt-4 pt-3 border-t border-blue-200/60 text-xs text-blue-900 flex items-center justify-between">
-                            <span>Clinical Mitigation: Regular electrolyte replenishment recommended.</span>
-                            <span class="font-semibold underline">View Protocol</span>
-                        </div>
-                    </div>
 
-                    <!-- Fall & Fatigue Risk -->
-                    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg p-5">
-                        <div class="flex items-center justify-between">
+                        <!-- GSR Detail -->
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
                             <div class="flex items-center space-x-3">
-                                <div class="p-3 bg-emerald-600 text-white rounded-lg shadow"><i class="fa-solid fa-person-falling text-lg"></i></div>
+                                <div class="p-2.5 bg-yellow-100 text-yellow-600 rounded-xl"><i class="fa-solid fa-bolt"></i></div>
                                 <div>
-                                    <h3 class="text-sm font-bold text-slate-800">Fall & Fatigue Risk</h3>
-                                    <span class="text-xs text-emerald-800 font-semibold">Current Level: Minimal</span>
+                                    <div class="text-xs font-semibold text-slate-500 uppercase">Electrodermal (GSR)</div>
+                                    <div class="text-xs text-slate-600 font-medium">Sympathetic Tone: Balanced</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-mono font-bold bg-emerald-200 text-emerald-900 px-2.5 py-1 rounded">15 / 100</span>
-                        </div>
-                        <p class="text-xs text-slate-600 mt-3">
-                            <strong class="text-slate-700">Fused Variables:</strong> Accelerometer Gait Analysis + HRV Recovery Index (88%) + Sleep Duration.
-                        </p>
-                        <div class="mt-4 pt-3 border-t border-emerald-200/60 text-xs text-emerald-900 flex items-center justify-between">
-                            <span>Clinical Mitigation: Normal ambulatory stability. No intervention required.</span>
-                            <span class="font-semibold underline">View Protocol</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Fusion Simulator -->
-                <div class="mt-8 bg-slate-50 rounded-lg p-5 border border-slate-200">
-                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Simulate Environmental Shift on Personal Health Risk</h3>
-                    <p class="text-xs text-slate-600 mb-4">Adjust simulated ambient temperature to observe how Jeevaflux recalculates municipal public health warnings in real time:</p>
-                    <div class="flex flex-col sm:flex-row items-center gap-4">
-                        <input type="range" id="tempSlider" min="25" max="48" value="34" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-gov-blue" oninput="simulateTempChange(this.value)">
-                        <div class="shrink-0 text-xs font-bold bg-slate-800 text-white px-3 py-1.5 rounded">
-                            Ambient: <span id="sliderVal">34</span> °C
-                        </div>
-                    </div>
-                    <div class="mt-3 text-xs font-medium text-slate-700 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-info text-gov-blue"></i>
-                        <span id="simulationOutcome">Result: Heat stress score remains within safe advisory limits for standard outdoor activity.</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 5: ALERTS & TIMELINE ==================== -->
-        <section id="tab-alerts" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
-                    <div>
-                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Automated Municipal & Clinical Alert Timeline</h2>
-                        <p class="text-xs text-slate-400">Chronological ledger of triggered public health warnings and wearable safety notifications</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="addSimulatedAlert()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3 py-1.5 rounded font-medium transition shadow">Simulate New Alert</button>
-                    </div>
-                </div>
-
-                <!-- Timeline List -->
-                <div class="mt-6 relative border-l-2 border-slate-200 ml-4 space-y-6" id="alertTimelineContainer">
-                    <!-- Alert Item 1 -->
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-500 border-2 border-white"></div>
-                        <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 shadow-sm">
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Heat Advisory Notice</span>
-                                <span class="text-slate-400 font-mono">02-Sep-2026 | 11:45 IST</span>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-slate-800">2.4 <span class="text-xs font-normal text-slate-500">µS</span></div>
+                                <div class="text-[10px] text-emerald-600">Low Stress</div>
                             </div>
-                            <h4 class="text-sm font-bold text-slate-800 mt-2">Elevated Ambient Temperature Threshold Reached</h4>
-                            <p class="text-xs text-slate-600 mt-1">LoRa Station DL-01 reported ambient temperature exceeding 34°C with 62% humidity. Personal risk score adjusted accordingly.</p>
                         </div>
                     </div>
 
-                    <!-- Alert Item 2 -->
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-cyan-600 border-2 border-white"></div>
-                        <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 shadow-sm">
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="font-bold text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded">Air Quality Update</span>
-                                <span class="text-slate-400 font-mono">02-Sep-2026 | 09:30 IST</span>
-                            </div>
-                            <h4 class="text-sm font-bold text-slate-800 mt-2">PM2.5 Moderate Fluctuation in Zone 4</h4>
-                            <p class="text-xs text-slate-600 mt-1">Routine air particulate sensor sync completed. No immediate clinical intervention warranted for general populace.</p>
-                        </div>
-                    </div>
-
-                    <!-- Alert Item 3 -->
-                    <div class="relative pl-6">
-                        <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-emerald-600 border-2 border-white"></div>
-                        <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 shadow-sm">
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">System Sync</span>
-                                <span class="text-slate-400 font-mono">02-Sep-2026 | 08:00 IST</span>
-                            </div>
-                            <h4 class="text-sm font-bold text-slate-800 mt-2">Daily Encrypted Backup Completed</h4>
-                            <p class="text-xs text-slate-600 mt-1">Local wearable telemetry successfully backed up to secure on-device storage. Offline buffer integrity verified.</p>
+                    <!-- Chart Container -->
+                    <div class="mt-6 pt-4 border-t border-slate-100">
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">7-Day Telemetry Trend</h4>
+                        <div class="h-48">
+                            <canvas id="healthDetailChart"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Personalized Recommendations -->
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Personalized Public Health Recommendations</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
-                        <div class="text-emerald-700 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
-                            <i class="fa-solid fa-droplet"></i> Hydration Target
-                        </div>
-                        <p class="text-xs text-slate-700">Drink approximately 3.2 liters of water today based on your activity level and current ambient temperature.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-cyan-50 border border-cyan-200">
-                        <div class="text-cyan-700 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
-                            <i class="fa-solid fa-wind"></i> Outdoor Activity Window
-                        </div>
-                        <p class="text-xs text-slate-700">Optimal exercise window between 06:00 AM and 08:30 AM before ambient temperatures peak.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-purple-50 border border-purple-200">
-                        <div class="text-purple-700 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
-                            <i class="fa-solid fa-shield-heart"></i> Rest & Recovery
-                        </div>
-                        <p class="text-xs text-slate-700">Your recovery score is 88%. You are well-positioned for standard daily productivity without fatigue risk.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 6: SYSTEM ARCHITECTURE ==================== -->
-        <section id="tab-architecture" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="pb-4 border-b border-slate-100">
-                    <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">System Architecture & Connectivity Pipeline</h2>
-                    <p class="text-xs text-slate-400">Dual-path telemetry ingestion supporting rugged offline-first resilience</p>
-                </div>
-
-                <!-- Architecture Flow Diagram Simulation -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <!-- Path A: Wearable Pipeline -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 flex flex-col justify-between">
+            <!-- ==================== TAB 3: ENVIRONMENTAL STATIONS ==================== -->
+            <section id="tab-environment" class="screen-view hidden space-y-4">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-100">
                         <div>
-                            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
-                                <h3 class="text-xs font-bold text-slate-800 uppercase">Path A: Wearable Telemetry Pipeline</h3>
-                                <span class="text-[10px] font-mono bg-blue-100 text-blue-800 px-2 py-0.5 rounded">Bluetooth LE</span>
-                            </div>
-                            <div class="my-6 flex items-center justify-between text-center gap-2">
-                                <div class="bg-white p-3 rounded border border-slate-200 flex-1 shadow-sm">
-                                    <i class="fa-solid fa-watch text-2xl text-gov-blue mb-1"></i>
-                                    <div class="text-xs font-bold text-slate-800">Wearable Band</div>
-                                    <div class="text-[10px] text-slate-500">HR, SpO2, GSR</div>
-                                </div>
-                                <div class="text-slate-400"><i class="fa-solid fa-arrow-right"></i></div>
-                                <div class="bg-white p-3 rounded border border-slate-200 flex-1 shadow-sm">
-                                    <i class="fa-solid fa-mobile-screen text-2xl text-emerald-600 mb-1"></i>
-                                    <div class="text-xs font-bold text-slate-800">Mobile Gateway</div>
-                                    <div class="text-[10px] text-slate-500">Edge Processing</div>
-                                </div>
-                                <div class="text-slate-400"><i class="fa-solid fa-arrow-right"></i></div>
-                                <div class="bg-white p-3 rounded border border-slate-200 flex-1 shadow-sm">
-                                    <i class="fa-solid fa-server text-2xl text-purple-600 mb-1"></i>
-                                    <div class="text-xs font-bold text-slate-800">National Node</div>
-                                    <div class="text-[10px] text-slate-500">Optional Sync</div>
-                                </div>
-                            </div>
+                            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Environmental Stations</h3>
+                            <p class="text-[11px] text-slate-400">LoRa Mesh Network (Delhi-NCR)</p>
                         </div>
-                        <p class="text-xs text-slate-600 pt-3 border-t border-slate-200">
-                            Continuous short-range Bluetooth Low Energy (BLE) streaming directly to citizen mobile device with zero cloud dependency.
-                        </p>
+                        <button onclick="refreshStations()" class="bg-slate-800 text-white px-3 py-1 rounded text-[11px] font-semibold">Scan Mesh</button>
                     </div>
 
-                    <!-- Path B: Environmental Stations Pipeline -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
-                                <h3 class="text-xs font-bold text-slate-800 uppercase">Path B: Environmental Stations Pipeline</h3>
-                                <span class="text-[10px] font-mono bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded">LoRa Mesh</span>
+                    <!-- Station Selector Buttons -->
+                    <div class="grid grid-cols-2 gap-2 my-4">
+                        <button onclick="selectStation('DL-01')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-left hover:border-cyan-500 transition">
+                            <div class="text-[10px] text-slate-400 font-mono">STATION DL-01</div>
+                            <div class="text-xs font-bold text-slate-800">Connaught Central</div>
+                            <div class="text-[10px] text-amber-600 font-semibold mt-0.5">AQI: 142 (Moderate)</div>
+                        </button>
+                        <button onclick="selectStation('DL-02')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-left hover:border-cyan-500 transition">
+                            <div class="text-[10px] text-slate-400 font-mono">STATION DL-02</div>
+                            <div class="text-xs font-bold text-slate-800">Anand Vihar Hub</div>
+                            <div class="text-[10px] text-red-600 font-semibold mt-0.5">AQI: 210 (Poor)</div>
+                        </button>
+                        <button onclick="selectStation('DL-03')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-left hover:border-cyan-500 transition">
+                            <div class="text-[10px] text-slate-400 font-mono">STATION DL-03</div>
+                            <div class="text-xs font-bold text-slate-800">AIIMS / Safdarjung</div>
+                            <div class="text-[10px] text-emerald-600 font-semibold mt-0.5">AQI: 118 (Moderate)</div>
+                        </button>
+                        <button onclick="selectStation('DL-04')" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-left hover:border-cyan-500 transition">
+                            <div class="text-[10px] text-slate-400 font-mono">STATION DL-04</div>
+                            <div class="text-xs font-bold text-slate-800">Noida Sector 62</div>
+                            <div class="text-[10px] text-amber-600 font-semibold mt-0.5">AQI: 130 (Moderate)</div>
+                        </button>
+                    </div>
+
+                    <!-- Selected Station Detail Card -->
+                    <div id="stationDetailsCard" class="bg-cyan-50/50 rounded-xl p-4 border border-cyan-100 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="text-xs font-bold text-cyan-900 uppercase" id="detStationTitle">Station DL-01 : Connaught Central</div>
+                            <span class="text-[10px] font-mono bg-cyan-200 text-cyan-900 px-2 py-0.5 rounded">RSSI: -72 dBm</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-white p-2.5 rounded-lg border border-cyan-100">
+                                <div class="text-slate-400 text-[10px]">Particulate Matter</div>
+                                <div class="font-bold text-slate-800" id="detStationPM">PM2.5: 68 µg/m³</div>
                             </div>
-                            <div class="my-6 flex items-center justify-between text-center gap-2">
-                                <div class="bg-white p-3 rounded border border-slate-200 flex-1 shadow-sm">
-                                    <i class="fa-solid fa-tower-broadcast text-2xl text-cyan-600 mb-1"></i>
-                                    <div class="text-xs font-bold text-slate-800">Env Station</div>
-                                    <div class="text-[10px] text-slate-500">AQI, Temp, PM2.5</div>
-                                </div>
-                                <div class="text-slate-400"><i class="fa-solid fa-arrow-right"></i></div>
-                                <div class="bg-white p-3 rounded border border-slate-200 flex-1 shadow-sm">
-                                    <i class="fa-solid fa-wifi text-2xl text-amber-600 mb-1"></i>
-                                    <div class="text-xs font-bold text-slate-800">LoRa Gateway</div>
-                                    <div class="text-[10px] text-slate-500">Long Range Mesh</div>
-                                </div>
-                                <div class="text-slate-400"><i class="fa-solid fa-arrow-right"></i></div>
-                                <div class="bg-white p-3 rounded border border-slate-200 flex-1 shadow-sm">
-                                    <i class="fa-solid id-card text-2xl text-emerald-600 mb-1"></i>
-                                    <div class="text-xs font-bold text-slate-800">Health Portal</div>
-                                    <div class="text-[10px] text-slate-500">Public Dashboard</div>
-                                </div>
+                            <div class="bg-white p-2.5 rounded-lg border border-cyan-100">
+                                <div class="text-slate-400 text-[10px]">Microclimate</div>
+                                <div class="font-bold text-slate-800" id="detStationClimate">34.2°C | 62% Humidity</div>
                             </div>
                         </div>
-                        <p class="text-xs text-slate-600 pt-3 border-t border-slate-200">
-                            Long-range LoRaWAN mesh transmitters relay microclimate telemetry across municipal sectors without relying on cellular networks.
-                        </p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Offline Mode Feature Highlight -->
-                <div class="mt-6 bg-emerald-50 border border-emerald-200 rounded-lg p-5">
-                    <div class="flex items-start space-x-3">
-                        <div class="text-emerald-700 text-xl"><i class="fa-solid fa-shield-halved"></i></div>
-                        <div>
-                            <h3 class="text-sm font-bold text-emerald-900">Robust Offline-First Resilience (Zero-Internet Operation)</h3>
-                            <p class="text-xs text-emerald-800 mt-1">
-                                Jeevaflux is engineered for rural, disaster-relief, and remote deployment scenarios. Core health monitoring, anomaly detection, risk computation, and local alert generation operate entirely offline on the edge device. When internet connectivity is restored, encrypted telemetry packets synchronize automatically with the Ministry's national server nodes.
+            <!-- ==================== TAB 4: RISK ANALYSIS ==================== -->
+            <section id="tab-risk" class="screen-view hidden space-y-4">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-4">
+                    <div class="pb-3 border-b border-slate-100">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Body + Environment Risk Fusion</h3>
+                        <p class="text-[11px] text-slate-400">Algorithmic synthesis of biometrics, baseline & microclimate</p>
+                    </div>
+
+                    <!-- Risk Cards -->
+                    <div class="space-y-3">
+                        <!-- Heat Stress -->
+                        <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-3.5">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="p-2 bg-amber-500 text-white rounded-lg"><i class="fa-solid fa-temperature-arrow-up text-xs"></i></div>
+                                    <h4 class="text-xs font-bold text-slate-800">Heat Stress Risk</h4>
+                                </div>
+                                <span class="text-xs font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded">68 / 100</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-2">
+                                <strong>Fused Variables:</strong> Skin Temp (36.5°C) + Ambient (34.2°C) + Humidity (62%).
+                            </p>
+                        </div>
+
+                        <!-- Respiratory Risk -->
+                        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 rounded-xl p-3.5">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="p-2 bg-cyan-600 text-white rounded-lg"><i class="fa-solid fa-lungs text-xs"></i></div>
+                                    <h4 class="text-xs font-bold text-slate-800">Respiratory Risk</h4>
+                                </div>
+                                <span class="text-xs font-bold bg-cyan-200 text-cyan-900 px-2 py-0.5 rounded">54 / 100</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-2">
+                                <strong>Fused Variables:</strong> SpO₂ Stability (98%) + PM2.5 (68 µg/m³) + Respiration.
+                            </p>
+                        </div>
+
+                        <!-- Dehydration Risk -->
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-3.5">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2.5">
+                                    <div class="p-2 bg-blue-500 text-white rounded-lg"><i class="fa-solid fa-droplet text-xs"></i></div>
+                                    <h4 class="text-xs font-bold text-slate-800">Dehydration Risk</h4>
+                                </div>
+                                <span class="text-xs font-bold bg-blue-200 text-blue-900 px-2 py-0.5 rounded">38 / 100</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-2">
+                                <strong>Fused Variables:</strong> GSR (2.4 µS) + Skin Temperature + UV Index.
                             </p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- ==================== TAB 7: PRIVACY & SECURITY ==================== -->
-        <section id="tab-privacy" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                <div class="pb-4 border-b border-slate-100">
-                    <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Privacy, Data Minimization & Security Protocols</h2>
-                    <p class="text-xs text-slate-400">Compliant with National Digital Health Mission (NDHM) and stringent government data protection standards</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <!-- Card 1 -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="p-2.5 bg-purple-100 text-purple-700 rounded-lg"><i class="fa-solid fa-microchip text-lg"></i></div>
-                            <h3 class="text-sm font-bold text-slate-800">Local & On-Device Processing</h3>
+                    <!-- Interactive Simulator -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase">Simulate Temperature Shift</h4>
+                        <div class="flex items-center gap-3">
+                            <input type="range" min="25" max="48" value="34" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-gov-blue" oninput="simulateTempChange(this.value)">
+                            <span class="text-xs font-bold bg-slate-800 text-white px-2 py-1 rounded shrink-0"><span id="sliderVal">34</span>°C</span>
                         </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            All biometric calculations and environmental risk fusions are computed locally on the wearable device or gateway smartphone. Raw physiological streams never leave your personal hardware without explicit consent.
-                        </p>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="p-2.5 bg-emerald-100 text-emerald-700 rounded-lg"><i class="fa-solid fa-key text-lg"></i></div>
-                            <h3 class="text-sm font-bold text-slate-800">Encrypted Local Storage</h3>
+                        <div class="text-[11px] text-slate-600 font-medium" id="simulationOutcome">
+                            Result: Heat stress within normal advisory limits for outdoor activity.
                         </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Stored telemetry logs are secured using military-grade AES-256 local encryption keys. Data at rest cannot be accessed by third-party applications or unauthorized agents.
-                        </p>
                     </div>
+                </div>
+            </section>
 
-                    <!-- Card 3 -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="p-2.5 bg-blue-100 text-blue-700 rounded-lg"><i class="fa-solid fa-user-shield text-lg"></i></div>
-                            <h3 class="text-sm font-bold text-slate-800">Strict Data Minimization</h3>
+            <!-- ==================== TAB 5: ALERTS & RECOMMENDATIONS ==================== -->
+            <section id="tab-alerts" class="screen-view hidden space-y-4">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+                        <div>
+                            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Alert Timeline & Directives</h3>
+                            <p class="text-[11px] text-slate-400">Municipal warnings & personalized advisories</p>
                         </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Jeevaflux collects only essential public health telemetry required for municipal monitoring. Personally Identifiable Information (PII) is decoupled from telemetry streams through randomized cryptographic hashes.
-                        </p>
+                        <button onclick="addSimulatedAlert()" class="bg-amber-600 text-white px-3 py-1 rounded text-[11px] font-semibold">Test Alert</button>
                     </div>
 
-                    <!-- Card 4 -->
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="p-2.5 bg-amber-100 text-amber-700 rounded-lg"><i class="fa-solid fa-cloud-arrow-up text-lg"></i></div>
-                            <h3 class="text-sm font-bold text-slate-800">Secure Optional Synchronization</h3>
+                    <!-- Timeline -->
+                    <div class="space-y-3 border-l-2 border-slate-200 ml-2 pl-4" id="alertTimelineContainer">
+                        <div class="relative">
+                            <div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-amber-500 border-2 border-white"></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+                                <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span class="font-bold text-amber-700">Heat Advisory</span>
+                                    <span>11:45 IST</span>
+                                </div>
+                                <div class="font-bold text-slate-800">Ambient Temperature > 34°C</div>
+                                <p class="text-[11px] text-slate-600 mt-0.5">LoRa Station DL-01 reported high microclimate temperature. Risk index updated.</p>
+                            </div>
                         </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Cloud transmission to national public health servers is strictly optional and executed over TLS 1.3 encrypted tunnels authenticated via secure government gateway tokens.
-                        </p>
-                    </div>
-                </div>
 
-                <!-- Citizen Consent Control Toggle -->
-                <div class="mt-8 bg-slate-50 rounded-lg p-5 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div>
-                        <h4 class="text-xs font-bold text-slate-800 uppercase">National Health Research Telemetry Contribution</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Contribute anonymized aggregate environmental-health correlation data to the Ministry's public health research repository.</p>
+                        <div class="relative">
+                            <div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-cyan-600 border-2 border-white"></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+                                <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span class="font-bold text-cyan-700">Air Quality Notice</span>
+                                    <span>09:30 IST</span>
+                                </div>
+                                <div class="font-bold text-slate-800">Moderate PM2.5 in Zone 4</div>
+                                <p class="text-[11px] text-slate-600 mt-0.5">Routine particulate sensor sync completed successfully.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3 shrink-0">
-                        <span id="consentStatusText" class="text-xs font-semibold text-emerald-600">Opted In (Anonymized)</span>
-                        <button onclick="toggleConsent()" id="consentToggleBtn" class="bg-emerald-600 text-white px-4 py-2 rounded text-xs font-medium transition shadow hover:bg-emerald-700">Disable Contribution</button>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-    </main>
+                    <!-- Recommendations -->
+                    <div class="pt-2">
+                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2.5">Personalized Recommendations</h4>
+                        <div class="space-y-2">
+                            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-slate-700 flex items-start space-x-2.5">
+                                <i class="fa-solid fa-droplet text-emerald-600 mt-0.5"></i>
+                                <div><strong class="text-emerald-900">Hydration Target:</strong> Drink 3.2 liters today based on your activity and temperature.</div>
+                            </div>
+                            <div class="p-3 bg-cyan-50 rounded-xl border border-cyan-200 text-xs text-slate-700 flex items-start space-x-2.5">
+                                <i class="fa-solid fa-wind text-cyan-600 mt-0.5"></i>
+                                <div><strong class="text-cyan-900">Exercise Window:</strong> Optimal outdoor exercise between 06:00 - 08:30 AM.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    <!-- Official Footer -->
-    <footer class="bg-gov-navy text-slate-300 mt-auto border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs">
-                <div>
-                    <div class="text-white font-bold text-sm mb-2 flex items-center gap-2">
-                        <span>Jeevaflux Platform</span>
-                        <span class="bg-amber-500 text-slate-900 text-[10px] px-1.5 py-0.5 rounded font-semibold">GOI Pilot</span>
+            <!-- ==================== TAB 6: PROFILE & PRIVACY ==================== -->
+            <section id="tab-privacy" class="screen-view hidden space-y-4">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-4">
+                    <div class="pb-3 border-b border-slate-100">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Privacy & Security</h3>
+                        <p class="text-[11px] text-slate-400">NDHM & DISHA compliant architecture</p>
                     </div>
-                    <p class="text-slate-400 leading-relaxed">
-                        An official public-health technology initiative fusing wearable telemetry and environmental sensors for proactive municipal health monitoring across India.
-                    </p>
-                </div>
-                <div>
-                    <div class="text-white font-bold text-sm mb-2">Quick Portal Navigation</div>
-                    <ul class="space-y-1.5 text-slate-400">
-                        <li><a href="#" onclick="switchTab('dashboard')" class="hover:text-white transition">National Dashboard</a></li>
-                        <li><a href="#" onclick="switchTab('health')" class="hover:text-white transition">Health Telemetry</a></li>
-                        <li><a href="#" onclick="switchTab('environment')" class="hover:text-white transition">Environmental Mesh Stations</a></li>
-                        <li><a href="#" onclick="switchTab('fusion')" class="hover:text-white transition">Body + Environment Analysis</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="text-white font-bold text-sm mb-2">Compliance & Standards</div>
-                    <p class="text-slate-400 leading-relaxed">
-                        Designed in accordance with Digital Information Security in Healthcare Act (DISHA) guidelines and National Digital Health Mission (NDHM) frameworks.
-                    </p>
-                    <div class="mt-3 text-slate-500 text-[11px]">
-                        © 2026 Ministry of Health and Family Welfare, Government of India. Prototype Build v2.4.
+
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-start space-x-3">
+                            <div class="p-2 bg-purple-100 text-purple-700 rounded-lg"><i class="fa-solid fa-microchip"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">On-Device Processing</h4>
+                                <p class="text-[11px] text-slate-600 mt-0.5">All risk fusions and biometric computations happen locally on your smartphone and wearable.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-start space-x-3">
+                            <div class="p-2 bg-emerald-100 text-emerald-700 rounded-lg"><i class="fa-solid fa-key"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">AES-256 Encrypted Storage</h4>
+                                <p class="text-[11px] text-slate-600 mt-0.5">Local telemetry logs are secured with military-grade encryption.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consent Toggle -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-800">Research Contribution</h4>
+                            <p class="text-[10px] text-slate-500">Contribute anonymized health telemetry to Ministry repository.</p>
+                        </div>
+                        <button onclick="toggleConsent()" id="consentToggleBtn" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition">Opted In</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </footer>
+            </section>
+
+        </main>
+
+        <!-- Fixed Android Bottom Navigation Bar -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-3 flex justify-around items-center z-50 shadow-lg">
+            <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center text-gov-blue transition">
+                <i class="fa-solid fa-house text-base"></i>
+                <span class="text-[10px] font-medium mt-0.5">Home</span>
+            </button>
+            <button onclick="switchTab('health')" id="nav-health" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-heart-pulse text-base"></i>
+                <span class="text-[10px] font-medium mt-0.5">Health</span>
+            </button>
+            <button onclick="switchTab('environment')" id="nav-environment" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-cloud-sun text-base"></i>
+                <span class="text-[10px] font-medium mt-0.5">Stations</span>
+            </button>
+            <button onclick="switchTab('risk')" id="nav-risk" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-brain text-base"></i>
+                <span class="text-[10px] font-medium mt-0.5">Risk</span>
+            </button>
+            <button onclick="switchTab('alerts')" id="nav-alerts" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-bell text-base"></i>
+                <span class="text-[10px] font-medium mt-0.5">Alerts</span>
+            </button>
+            <button onclick="switchTab('privacy')" id="nav-privacy" class="nav-btn flex flex-col items-center text-slate-400 hover:text-slate-600 transition">
+                <i class="fa-solid fa-shield text-base"></i>
+                <span class="text-[10px] font-medium mt-0.5">Privacy</span>
+            </button>
+        </nav>
+
+    </div>
 
     <!-- JavaScript Application Logic -->
     <script>
+        // Real-time status bar clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('statusBarTime').textContent = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
         // Tab Switching Logic
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.screen-view').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tabId).classList.remove('hidden');
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = "nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700";
+                btn.className = "nav-btn flex flex-col items-center text-slate-400 hover:text-slate-600 transition";
             });
 
             const activeBtn = document.getElementById('nav-' + tabId);
             if (activeBtn) {
-                activeBtn.className = "nav-btn px-3.5 py-2.5 text-xs sm:text-sm font-medium rounded-t-md transition flex items-center gap-2 bg-slate-900 text-white border-t-2 border-amber-400";
+                activeBtn.className = "nav-btn flex flex-col items-center text-gov-blue transition";
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const mainContainer = document.getElementById('main-content');
+            if (mainContainer) mainContainer.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Live Simulated Readings Updater
+        // Offline Mode Toggle
         let isOffline = false;
         function toggleOfflineMode() {
             isOffline = !isOffline;
             const btn = document.getElementById('offlineModeBtn');
             const txt = document.getElementById('offlineBtnText');
+            const badge = document.getElementById('offlineIndicatorBadge');
             if (isOffline) {
-                btn.className = "bg-emerald-600 hover:bg-emerald-750 text-white px-3 py-1.5 rounded text-xs font-semibold transition flex items-center gap-1.5 shadow animate-pulse";
-                txt.textContent = "Offline Mode: ACTIVE (Edge Local)";
+                btn.className = "bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold transition flex items-center gap-1 shadow animate-pulse";
+                txt.textContent = "Offline Active";
+                badge.classList.remove('hidden');
             } else {
-                btn.className = "bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition flex items-center gap-1.5 shadow";
-                txt.textContent = "Offline Mode: Standby";
+                btn.className = "bg-amber-600/90 hover:bg-amber-600 text-white px-2.5 py-1 rounded-full text-[11px] font-semibold transition flex items-center gap-1 shadow";
+                txt.textContent = "Offline";
+                badge.classList.add('hidden');
             }
         }
 
+        // Live Simulated Readings
         function triggerSimulatedReading() {
             const hr = Math.floor(72 + Math.random() * 10);
             const spo2 = Math.floor(97 + Math.random() * 2);
@@ -999,165 +626,95 @@
             
             document.getElementById('detHR').textContent = hr;
             document.getElementById('detSpO2').textContent = spo2 + '%';
-            document.getElementById('detTemp').textContent = temp + ' °C';
-
-            // Visual feedback pulse
-            event.target.classList.add('bg-emerald-600');
-            setTimeout(() => { event.target.classList.remove('bg-emerald-600'); }, 400);
+            document.getElementById('detTemp').textContent = temp;
         }
 
-        // Station Selection
+        // Station Selection Data
         const stationData = {
-            'DL-01': { name: 'DL-01 : Connaught Central', aqi: '142 (Moderate)', pm: 'PM2.5: 68 µg/m³ | PM10: 115 µg/m³', climate: '34.2 °C | Humidity: 62%' },
-            'DL-02': { name: 'DL-02 : Anand Vihar Hub', aqi: '210 (Poor / High)', pm: 'PM2.5: 124 µg/m³ | PM10: 198 µg/m³', climate: '35.5 °C | Humidity: 58%' },
-            'DL-03': { name: 'DL-03 : AIIMS / Safdarjung', aqi: '118 (Moderate)', pm: 'PM2.5: 52 µg/m³ | PM10: 92 µg/m³', climate: '33.8 °C | Humidity: 65%' },
-            'DL-04': { name: 'DL-04 : Noida Sector 62', aqi: '130 (Moderate)', pm: 'PM2.5: 59 µg/m³ | PM10: 104 µg/m³', climate: '34.0 °C | Humidity: 60%' }
+            'DL-01': { title: 'Station DL-01 : Connaught Central', pm: 'PM2.5: 68 µg/m³', climate: '34.2°C | 62% Humidity' },
+            'DL-02': { title: 'Station DL-02 : Anand Vihar Hub', pm: 'PM2.5: 124 µg/m³', climate: '35.5°C | 58% Humidity' },
+            'DL-03': { title: 'Station DL-03 : AIIMS / Safdarjung', pm: 'PM2.5: 52 µg/m³', climate: '33.8°C | 65% Humidity' },
+            'DL-04': { title: 'Station DL-04 : Noida Sector 62', pm: 'PM2.5: 59 µg/m³', climate: '34.0°C | 60% Humidity' }
         };
 
         function selectStation(id) {
             const data = stationData[id];
-            document.getElementById('selectedStationName').textContent = 'Station ' + data.name;
-            document.getElementById('stationDetails').innerHTML = `
-                <div class="p-3 bg-white rounded border border-slate-200">
-                    <div class="text-slate-400">Location ID</div>
-                    <div class="font-bold text-slate-800 text-sm">${data.name}</div>
-                </div>
-                <div class="p-3 bg-white rounded border border-slate-200">
-                    <div class="text-slate-400">Air Quality Index (AQI)</div>
-                    <div class="font-bold text-amber-600 text-sm">${data.aqi}</div>
-                </div>
-                <div class="p-3 bg-white rounded border border-slate-200">
-                    <div class="text-slate-400">Particulate Matter</div>
-                    <div class="font-bold text-slate-800 text-sm">${data.pm}</div>
-                </div>
-                <div class="p-3 bg-white rounded border border-slate-200">
-                    <div class="text-slate-400">Microclimate</div>
-                    <div class="font-bold text-slate-800 text-sm">${data.climate}</div>
-                </div>
-            `;
+            document.getElementById('detStationTitle').textContent = data.title;
+            document.getElementById('detStationPM').textContent = data.pm;
+            document.getElementById('detStationClimate').textContent = data.climate;
         }
 
         function refreshStations() {
-            alert('LoRa mesh scan completed. All 12 municipal nodes synchronized successfully.');
+            alert('LoRa mesh scan completed. All 12 municipal nodes synchronized.');
         }
 
-        // Fusion Simulator Slider
+        // Simulation Slider
         function simulateTempChange(val) {
             document.getElementById('sliderVal').textContent = val;
             const outcome = document.getElementById('simulationOutcome');
             if (val > 40) {
-                outcome.innerHTML = `<span class="text-red-600 font-bold">CRITICAL WARNING:</span> Ambient ${val}°C triggers severe Heat Stress risk. Automated municipal advisory dispatched to field workers.`;
+                outcome.innerHTML = `<span class="text-red-600 font-bold">CRITICAL WARNING:</span> Ambient ${val}°C triggers severe Heat Stress risk.`;
             } else if (val > 36) {
-                outcome.innerHTML = `<span class="text-amber-600 font-bold">MODERATE ADVISORY:</span> Ambient ${val}°C elevates dehydration risk. Recommend frequent water breaks.`;
+                outcome.innerHTML = `<span class="text-amber-600 font-bold">MODERATE ADVISORY:</span> Ambient ${val}°C elevates dehydration risk.`;
             } else {
-                outcome.innerHTML = `Result: Heat stress score remains within safe advisory limits for standard outdoor activity.`;
+                outcome.innerHTML = `Result: Heat stress within normal advisory limits for outdoor activity.`;
             }
         }
 
-        // Add Simulated Alert
+        // Simulated Alert
         function addSimulatedAlert() {
             const container = document.getElementById('alertTimelineContainer');
-            const now = new Date().toLocaleTimeString();
             const div = document.createElement('div');
-            div.className = "relative pl-6 animate-fade-in";
+            div.className = "relative";
             div.innerHTML = `
-                <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-red-500 border-2 border-white"></div>
-                <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 shadow-sm">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded">Simulated Municipal Alert</span>
-                        <span class="text-slate-400 font-mono">Today | ${now}</span>
+                <div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-red-500 border-2 border-white"></div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+                    <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                        <span class="font-bold text-red-700">Simulated Alert</span>
+                        <span>Just Now</span>
                     </div>
-                    <h4 class="text-sm font-bold text-slate-800 mt-2">Manual Sensor Threshold Triggered</h4>
-                    <p class="text-xs text-slate-600 mt-1">Simulated test alert verified through municipal gateway path A and B.</p>
+                    <div class="font-bold text-slate-800">Manual Sensor Threshold Triggered</div>
+                    <p class="text-[11px] text-slate-600 mt-0.5">Test alert verified via mobile edge gateway.</p>
                 </div>
             `;
             container.insertBefore(div, container.firstChild);
         }
 
-        // Privacy Consent Toggle
-        let consentActive = true;
+        // Privacy Consent
+        let consentOpt = true;
         function toggleConsent() {
-            consentActive = !consentActive;
-            const text = document.getElementById('consentStatusText');
+            consentOpt = !consentOpt;
             const btn = document.getElementById('consentToggleBtn');
-            if (consentActive) {
-                text.textContent = "Opted In (Anonymized)";
-                text.className = "text-xs font-semibold text-emerald-600";
-                btn.textContent = "Disable Contribution";
-                btn.className = "bg-emerald-600 text-white px-4 py-2 rounded text-xs font-medium transition shadow hover:bg-emerald-700";
+            if (consentOpt) {
+                btn.textContent = "Opted In";
+                btn.className = "bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition";
             } else {
-                text.textContent = "Opted Out (Local Only)";
-                text.className = "text-xs font-semibold text-slate-500";
-                btn.textContent = "Enable Contribution";
-                btn.className = "bg-slate-700 text-white px-4 py-2 rounded text-xs font-medium transition shadow hover:bg-slate-800";
+                btn.textContent = "Opted Out";
+                btn.className = "bg-slate-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition";
             }
         }
 
-        // Initialize Charts with Chart.js
+        // Initialize Charts
         window.addEventListener('load', () => {
-            // Dashboard Trend Chart
-            const ctxDash = document.getElementById('dashboardTrendChart').getContext('2d');
-            new Chart(ctxDash, {
-                type: 'line',
-                data: {
-                    labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-                    datasets: [
-                        {
-                            label: 'Heart Rate (BPM)',
-                            data: [65, 62, 68, 78, 84, 82, 75, 70],
-                            borderColor: '#ef4444',
-                            backgroundColor: 'rgba(239, 68, 68, 0.05)',
-                            tension: 0.3,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Ambient Temp (°C)',
-                            data: [28, 27, 26, 30, 36, 38, 34, 30],
-                            borderColor: '#0284c7',
-                            backgroundColor: 'rgba(2, 132, 199, 0.05)',
-                            tension: 0.3,
-                            yAxisID: 'y1'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    scales: {
-                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Heart Rate (BPM)' } },
-                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Temperature (°C)' } }
-                    }
-                }
-            });
-
-            // Health Detail Chart
             const ctxHealth = document.getElementById('healthDetailChart').getContext('2d');
             new Chart(ctxHealth, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    datasets: [
-                        {
-                            label: 'Average SpO2 (%)',
-                            data: [98, 98, 99, 97, 98, 98, 99],
-                            backgroundColor: '#06b6d4',
-                            borderRadius: 4
-                        },
-                        {
-                            label: 'Resting HR (BPM)',
-                            data: [68, 70, 67, 72, 69, 68, 67],
-                            backgroundColor: '#334155',
-                            borderRadius: 4
-                        }
-                    ]
+                    datasets: [{
+                        label: 'Resting Heart Rate (BPM)',
+                        data: [68, 70, 67, 72, 69, 68, 67],
+                        borderColor: '#1d4ed8',
+                        backgroundColor: 'rgba(29, 78, 216, 0.05)',
+                        tension: 0.3,
+                        fill: true
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: false, min: 50 }
-                    }
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: false, min: 50 } }
                 }
             });
         });
