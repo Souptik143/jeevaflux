@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "JeevaFlux"
+message: "If you use this project or its documentation, please cite JeevaFlux."
+type: software
+authors:
+  - name: "SYMBIONICS"
+    affiliation: "Smart India Hackathon 2026"
+date-released: 2026-09-02
+version: "0.1.0"
+abstract: "On-device AI personal health companion for privacy-preserving monitoring and early warning."
+keywords:
+  - healthtech
+  - edge-ai
+  - wearable
+  - sensor-fusion
+  - TinyML
+  - privacy
